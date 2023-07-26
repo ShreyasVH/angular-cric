@@ -1,0 +1,35 @@
+<div style="display: flex">
+    <div class="cols-8">
+        <div>
+            <h5 class="mat-headline-5" style="text-align: center; font-size: 1.5rem; font-weight: 400">Tours for year: {{year}}</h5>
+
+            <mat-card *ngFor="let tour of tours" appearence="outlined" style="margin-bottom: 1%; text-align: initial">
+                <mat-card-content>
+                    <span>{{tour.name}}</span>
+
+                    <span style="float: right">{{getFormattedDate(tour.startTime)}}</span>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <div class="cols-4" style="text-align: center">
+        <h5 class="mat-headline-5" style="font-size: 1.5rem; font-weight: 400">Years:</h5>
+
+        <div>
+            <button
+                *ngFor="let currentYear of years"
+                mat-button
+                [ngClass]="{
+                    'mat-mdc-button mat-mdc-raised-button': currentYear === year,
+                     'mdc-button--outlined mat-mdc-outlined-button': currentYear !== year
+                }"
+                color="accent"
+                style="margin-left: 1%; margin-right: 1%"
+                (click)="handleYearClick(currentYear)"
+            >
+                {{currentYear}}
+            </button>
+        </div>
+    </div>
+</div>

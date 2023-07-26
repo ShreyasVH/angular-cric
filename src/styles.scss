@@ -1,0 +1,25 @@
+@import 'themes';
+
+body {
+  font-family: 'Helvetica';
+}
+
+.mat-grid-tile-content {
+  display: block !important;
+  text-align: center;
+}
+
+.cols-8 {
+  flex: 8;
+}
+
+.cols-4 {
+  flex: 4;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
