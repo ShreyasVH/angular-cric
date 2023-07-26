@@ -1,9 +1,9 @@
 <div style="display: flex">
     <div class="cols-8">
         <div>
-            <h5 class="mat-headline-5" style="text-align: center; font-size: 1.5rem; font-weight: 400">Tours for year: {{year}}</h5>
+            <h5 class="mat-headline-5" style="text-align: center; font-size: 1.5rem; font-weight: 400; margin-block-start: 0; margin-block-end: 0; margin-bottom: 1%">Tours for year: {{year}}</h5>
 
-            <mat-card *ngFor="let tour of tours" appearence="outlined" style="margin-bottom: 1%; text-align: initial">
+            <mat-card *ngFor="let tour of tours" appearence="outlined" style="margin-bottom: 1%; text-align: initial; cursor: pointer" (click)="handleTourClick(tour.id)">
                 <mat-card-content>
                     <span>{{tour.name}}</span>
 
@@ -14,7 +14,7 @@
     </div>
 
     <div class="cols-4" style="text-align: center">
-        <h5 class="mat-headline-5" style="font-size: 1.5rem; font-weight: 400">Years:</h5>
+        <h5 class="mat-headline-5" style="font-size: 1.5rem; font-weight: 400; margin-block-start: 0; margin-block-end: 0; margin-bottom: 1%">Years:</h5>
 
         <div>
             <button

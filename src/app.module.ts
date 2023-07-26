@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 import { HomeComponent } from './app/containers/home/home.component';
+import { TourDetailComponent } from './app/containers/tours/detail/detail.component';
 import { AppBarComponent } from './app/components/app-bar/app-bar.component';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { AppBarComponent } from './app/components/app-bar/app-bar.component';
     AppComponent,
     HomeComponent,
     AppBarComponent,
+    TourDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -65,6 +65,10 @@ export class HomeComponent {
         this.router.navigate(['/browse'], { queryParams: { year: year } });
     }
 
+    handleTourClick(id: number) {
+        this.router.navigate(['/tours/detail'], { queryParams: { id: id } });
+    }
+
     async handleScroll() {
         const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
         const body = document.body;
