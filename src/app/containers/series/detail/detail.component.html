@@ -1,0 +1,30 @@
+<div style="display: flex">
+    <div class="cols-8">
+        <div *ngIf="loaded">
+            <h5 class="mat-headline-5" style="font-size: 1.5rem; font-weight: 400; margin-block-start: 0; margin-block-end: 0; margin-bottom: 1%">{{series.name + ' - ' + series.gameType.name}}</h5>
+
+            <mat-card *ngFor="let match of series.matches; let i = index" appearence="outlined" style="margin-bottom: 1%; text-align: initial">
+                <mat-card-content>
+                    <div style="display: flex">
+                        <div class="cols-lg-4">
+                            <span>{{(i + 1) + '. ' + match.team1.name + ' v/s ' + match.team2.name}}</span>
+                            <p style="margin-bottom: 0">
+                                {{renderWinner(match)}}
+                            </p>
+                        </div>
+
+                        <div class="cols-lg-4" style="text-align: center">
+                            <span>
+                                {{renderStadiumDetails(match.stadium)}}
+                            </span>
+                        </div>
+
+                        <div class="cols-lg-4">
+                            <span style="float: right">{{getFormattedDate(match.startTime)}}</span>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

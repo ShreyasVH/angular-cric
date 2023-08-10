@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import { HomeComponent } from './app/containers/home/home.component';
 import { TourDetailComponent } from './app/containers/tours/detail/detail.component';
+import { SeriesDetailComponent } from './app/containers/series/detail/detail.component';
 import { AppBarComponent } from './app/components/app-bar/app-bar.component';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AppBarComponent } from './app/components/app-bar/app-bar.component';
     AppComponent,
     HomeComponent,
     AppBarComponent,
-    TourDetailComponent
+    TourDetailComponent,
+    SeriesDetailComponent
   ],
   imports: [
     BrowserModule,

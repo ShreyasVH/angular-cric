@@ -3,7 +3,7 @@
         <div>
             <h5 class="mat-headline-5" style="font-size: 1.5rem; font-weight: 400; margin-block-start: 0; margin-block-end: 0; margin-bottom: 1%">{{tour.name}}</h5>
 
-            <mat-card *ngFor="let series of tour.seriesList" appearence="outlined" style="margin-bottom: 1%; text-align: initial">
+            <mat-card *ngFor="let series of tour.seriesList" appearence="outlined" style="margin-bottom: 1%; text-align: initial; cursor: pointer" (click)="handleSeriesClick(series.id)">
                 <mat-card-content>
                     <span>{{series.gameType.name}}</span>
 
