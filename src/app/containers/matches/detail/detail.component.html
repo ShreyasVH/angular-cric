@@ -1,0 +1,327 @@
+<div style="display: flex">
+    <div class="cols-8">
+        <div *ngIf="loaded">
+            <div>
+                <strong>
+                    Series:
+                    &nbsp;
+                </strong>
+
+                <span class="series-link" style="color: blue; cursor: pointer" (click)="handleSeriesClick(match.series.id)">
+                    {{match.series.name + ' - ' + match.series.gameType.name}}
+                  </span>
+            </div>
+
+            <div>
+                <strong>
+                    Teams:
+                    &nbsp;
+                </strong>
+
+                <mat-chip *ngFor="let team of getTeams()" style="margin-right: 1%" class="chip secondary">
+                    {{team.name}}
+                </mat-chip>
+            </div>
+
+            <div>
+                <strong>
+                    Toss:
+                    &nbsp;
+                </strong>
+
+                {{getTossMarkup()}}
+            </div>
+
+            <div>
+                <strong>
+                    Result:
+                    &nbsp;
+                </strong>
+
+                {{getResultMarkup()}}
+            </div>
+
+            <div>
+                <strong>
+                    Stadium:
+                    &nbsp;
+                </strong>
+
+                {{match.stadium.name + ', ' + match.stadium.country.name}}
+            </div>
+
+            <div>
+                <strong>
+                    Start Time:
+                    &nbsp;
+                </strong>
+
+                {{getMatchStartTime()}}
+            </div>
+
+            <div class="row">
+                <div class="bordered-container">
+                    <div class="container">
+                        <h2 style="font-weight: normal">
+                            Playing Squads
+                        </h2>
+
+                        <div *ngFor="let team of getTeams()">
+                            <span>
+                              {{team.name}}
+                            </span>
+
+                            <div>
+                                <mat-chip *ngFor="let player of match.players[team.id]" style="margin: 0.5%" [class]="{chip: true, clickable: true, success: team.id === match.team1.id, error: team.id === match.team2.id}">
+                                    <span (click)="handlePlayerClick(player.id)">
+                                        {{getPlayerLabel(player)}}
+                                    </span>
+                                </mat-chip>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <strong>
+                    Man of the Match:
+                    &nbsp;
+                </strong>
+
+                <mat-chip *ngFor="let motm of match.manOfTheMatchList" class="chip gold filled clickable">
+                    <span (click)="handlePlayerClick(motm.id)">
+                        {{motm.name}}
+                    </span>
+                </mat-chip>
+            </div>
+
+            <div class="row">
+                <strong>
+                    Scorecards:
+                    &nbsp;
+                </strong>
+                <div class="bordered-container">
+                    <div class="container">
+                        <div *ngFor="let innings of [1, 2, 3, 4]">
+                            <div class="innings bordered-container" *ngIf="innings <= getTotalInningsCount()">
+                                <div class="container">
+                                    <div>
+                                        <h3 style="text-align: center">
+                                            {{getInningsTitle(innings, match.series.gameType.name)}}
+                                        </h3>
+
+                                        <table mat-table [dataSource]="getScoresForInnings(innings)">
+                                            <ng-container matColumnDef="Batsman">
+                                                <th mat-header-cell *matHeaderCellDef>Batsman</th>
+                                                <td mat-cell *matCellDef="let score">
+                                                    <span class="link" (click)="handlePlayerClick(score.player.id)">
+                                                        {{score.player.name}}
+                                                    </span>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Dismissal">
+                                                <th mat-header-cell *matHeaderCellDef>Dismissal</th>
+                                                <td mat-cell *matCellDef="let score">
+                                                    <span *ngIf="score.dismissalMode; else elseBlock">
+                                                        <span *ngIf="score.dismissalMode.name === 'Bowled'">
+                                                            b&nbsp;
+                                                            <span class="link" (click)="handlePlayerClick(score.bowler.id)">
+                                                                {{score.bowler.name}}
+                                                            </span>
+                                                        </span>
+
+                                                        <span *ngIf="score.dismissalMode.name === 'Run Out'">
+                                                            run out&nbsp;
+                                                            <span *ngFor="let fielder of score.fielders; index as i;">
+                                                                <span *ngIf="i > 0">
+                                                                    &nbsp;/&nbsp;
+                                                                </span>
+                                                                <span class="link" (click)="handlePlayerClick(fielder.id)">
+                                                                    {{fielder.name}}
+                                                                </span>
+                                                            </span>
+                                                        </span>
+
+                                                        <span *ngIf="score.dismissalMode.name === 'Caught'">
+                                                            <span *ngIf="score.fielders[0].id === score.bowler.id; else elseBlock">
+                                                                c & b&nbsp;
+                                                                <span class="link" (click)="handlePlayerClick(score.bowler.id)">
+                                                                    {{score.bowler.name}}
+                                                                </span>
+                                                            </span>
+                                                            <ng-template #elseBlock>
+                                                                <span>
+                                                                    c&nbsp;
+                                                                    <span class="link" (click)="handlePlayerClick(score.fielders[0].id)">
+                                                                        {{score.fielders[0].name}}
+                                                                    </span>
+                                                                    &nbsp;b&nbsp;
+                                                                    <span class="link" (click)="handlePlayerClick(score.bowler.id)">
+                                                                        {{score.bowler.name}}
+                                                                    </span>
+                                                                </span>
+                                                            </ng-template>
+                                                        </span>
+
+                                                        <span *ngIf="score.dismissalMode.name === 'Stumped'">
+                                                            st&nbsp;
+                                                            <span class="link" (click)="handlePlayerClick(score.fielders[0].id)">
+                                                                {{score.fielders[0].name}}
+                                                            </span>
+                                                            &nbsp;b&nbsp;
+                                                            <span class="link" (click)="handlePlayerClick(score.bowler.id)">
+                                                                {{score.bowler.name}}
+                                                            </span>
+                                                        </span>
+
+                                                        <span *ngIf="score.dismissalMode.name === 'LBW'">
+                                                            lbw&nbsp;
+                                                            <span class="link" (click)="handlePlayerClick(score.bowler.id)">
+                                                                {{score.bowler.name}}
+                                                            </span>
+                                                        </span>
+
+                                                        <span *ngIf="score.dismissalMode.name === 'Hit Wicket'">
+                                                            Hit Wicket&nbsp;
+                                                            <span class="link" (click)="handlePlayerClick(score.bowler.id)">
+                                                                {{score.bowler.name}}
+                                                            </span>
+                                                        </span>
+
+                                                        <span *ngIf="['Retired Hurt', 'Hit Twice', 'Obstructing the Field', 'Timed Out', 'Handled the Ball'].includes(score.dismissalMode.name)">
+                                                            {{score.dismissalMode.name}}
+                                                        </span>
+                                                    </span>
+                                                    <ng-template #elseBlock>
+                                                        Not Out
+                                                    </ng-template>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Runs">
+                                                <th mat-header-cell *matHeaderCellDef>Runs</th>
+                                                <td mat-cell *matCellDef="let score">
+                                                    {{score.runs}}
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Balls">
+                                                <th mat-header-cell *matHeaderCellDef>Balls</th>
+                                                <td mat-cell *matCellDef="let score">
+                                                    {{score.balls}}
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Fours">
+                                                <th mat-header-cell *matHeaderCellDef>4s</th>
+                                                <td mat-cell *matCellDef="let score">
+                                                    {{score.fours}}
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Sixes">
+                                                <th mat-header-cell *matHeaderCellDef>6s</th>
+                                                <td mat-cell *matCellDef="let score">
+                                                    {{score.sixes}}
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+                                                    {{getExtrasText(innings)}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="total">
+                                                <th mat-header-cell *matHeaderCellDef></th>
+                                                <td mat-cell *matCellDef="let score">
+
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+                                                    {{getTotalText(innings)}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="totalAdditional">
+                                                <th mat-header-cell *matHeaderCellDef></th>
+                                                <td mat-cell *matCellDef="let score">
+
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="scoreColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: scoreColumns;"></tr>
+                                            <tr mat-footer-row *matFooterRowDef="scoreColumns"></tr>
+                                            <tr mat-footer-row *matFooterRowDef="['totalAdditional', 'totalAdditional', 'totalAdditional', 'totalAdditional', 'totalAdditional', 'total']"></tr>
+                                        </table>
+
+                                        <div style="width: 75%; margin-left: auto; margin-right: auto;">
+                                            <table mat-table [dataSource]="getFiguresForInnings(innings)" style="margin-top: 2%; max-width: 80%">
+                                                <ng-container matColumnDef="Bowler">
+                                                    <th mat-header-cell *matHeaderCellDef>Bowler</th>
+                                                    <td mat-cell *matCellDef="let figure">
+                                                    <span class="link" (click)="handlePlayerClick(figure.player.id)">
+                                                        {{figure.player.name}}
+                                                    </span>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="Overs">
+                                                    <th mat-header-cell *matHeaderCellDef>Overs</th>
+                                                    <td mat-cell *matCellDef="let figure">
+                                                        {{getOverDetails(figure.balls)}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="Maidens">
+                                                    <th mat-header-cell *matHeaderCellDef>Maidens</th>
+                                                    <td mat-cell *matCellDef="let figure">
+                                                        {{figure.maidens}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="Runs">
+                                                    <th mat-header-cell *matHeaderCellDef>Runs</th>
+                                                    <td mat-cell *matCellDef="let figure">
+                                                        {{figure.runs}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="Wickets">
+                                                    <th mat-header-cell *matHeaderCellDef>Wickets</th>
+                                                    <td mat-cell *matCellDef="let figure">
+                                                        {{figure.wickets}}
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="figureColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: figureColumns;"></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
