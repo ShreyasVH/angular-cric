@@ -9,10 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
 
 import { HomeComponent } from './app/containers/home/home.component';
 import { TourDetailComponent } from './app/containers/tours/detail/detail.component';
 import { SeriesDetailComponent } from './app/containers/series/detail/detail.component';
+import { MatchDetailComponent } from './app/containers/matches/detail/detail.component';
 import { AppBarComponent } from './app/components/app-bar/app-bar.component';
 
 @NgModule({
@@ -21,7 +24,8 @@ import { AppBarComponent } from './app/components/app-bar/app-bar.component';
     HomeComponent,
     AppBarComponent,
     TourDetailComponent,
-    SeriesDetailComponent
+    SeriesDetailComponent,
+    MatchDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,9 @@ import { AppBarComponent } from './app/components/app-bar/app-bar.component';
     BrowserAnimationsModule,
     MatGridListModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatChipsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

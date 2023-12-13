@@ -3,7 +3,7 @@
         <div *ngIf="loaded">
             <h5 class="mat-headline-5" style="font-size: 1.5rem; font-weight: 400; margin-block-start: 0; margin-block-end: 0; margin-bottom: 1%">{{series.name + ' - ' + series.gameType.name}}</h5>
 
-            <mat-card *ngFor="let match of series.matches; let i = index" appearence="outlined" style="margin-bottom: 1%; text-align: initial">
+            <mat-card *ngFor="let match of series.matches; let i = index" appearence="outlined" style="margin-bottom: 1%; text-align: initial; cursor: pointer;" (click)="handleMatchClick(match.id)">
                 <mat-card-content>
                     <div style="display: flex">
                         <div class="cols-lg-4">

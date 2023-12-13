@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { formatDateTimeString } from '../../../utils';
 import { getById } from '../../../endpoints/series'
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-series-detail',
     templateUrl: './detail.component.html'
 })
 export class SeriesDetailComponent {
+    constructor(private router: Router) { }
+
     series: any = {}
     loaded: boolean = false
 
@@ -60,5 +63,9 @@ export class SeriesDetailComponent {
 
     renderStadiumDetails(stadium: any): string {
         return stadium.name + ', ' + stadium.country.name;
+    }
+
+    handleMatchClick(id: number) {
+        this.router.navigate(['/matches/detail'], { queryParams: { id: id } });
     }
 }

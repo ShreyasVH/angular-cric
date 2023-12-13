@@ -2,6 +2,7 @@
 
 body {
   font-family: 'Helvetica';
+  line-height: 1.5;
 }
 
 .mat-grid-tile-content {
@@ -29,4 +30,67 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
+}
+
+.container {
+  padding: 2%;
+}
+
+.bordered-container {
+  margin: 0.25%;
+  width: 99.5%;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.row {
+  width: 100%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.link {
+  color: #42a5f5;
+  cursor: pointer;
+}
+
+.chip {
+  background-color: #f3f6f9 !important;
+
+  &.clickable {
+    span {
+      cursor: pointer;
+    }
+  }
+
+  &.secondary {
+    border: 1px solid #ba68c8;
+    .mat-mdc-chip-action-label {
+      color: #ba68c8 !important;
+    }
+  }
+
+  &.success {
+    border: 1px solid #4caf50;
+    .mat-mdc-chip-action-label {
+      color: #4caf50 !important;
+    }
+  }
+
+  &.error {
+    border: 1px solid #ef5350;
+    .mat-mdc-chip-action-label {
+      color: #ef5350 !important;
+    }
+  }
+
+  &.gold {
+    border: 1px solid #e0aa3e;
+    &.filled {
+      background-color: #e0aa3e !important;
+      .mat-mdc-chip-action-label {
+        color: white !important;
+      }
+    }
+  }
 }
