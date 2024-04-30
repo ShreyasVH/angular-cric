@@ -6,3 +6,5 @@ export const formatDateTimeString = (dateTimeString: string): string => {
     };
     return date.toLocaleDateString('en-GB', options);
 };
+
+export const copyObject = (referencedObject: any) => JSON.parse(JSON.stringify(referencedObject));

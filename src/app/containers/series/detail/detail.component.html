@@ -11,6 +11,8 @@
                             <p style="margin-bottom: 0">
                                 {{renderWinner(match)}}
                             </p>
+
+                            <button mat-raised-button color="warn" (click)="handleDeleteMatchClick(match.id, $event)">DELETE</button>
                         </div>
 
                         <div class="cols-lg-4" style="text-align: center">
