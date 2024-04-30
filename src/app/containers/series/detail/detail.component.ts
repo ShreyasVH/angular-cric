@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { formatDateTimeString } from '../../../utils';
-import { getById } from '../../../endpoints/series'
+import { formatDateTimeString, copyObject } from '../../../utils';
+import { getById } from '../../../endpoints/series';
+import { removeMatch } from '../../../endpoints/matches';
 import {Router} from "@angular/router";
 
 @Component({
@@ -67,5 +68,19 @@ export class SeriesDetailComponent {
 
     handleMatchClick(id: number) {
         this.router.navigate(['/matches/detail'], { queryParams: { id: id } });
+    }
+
+    async handleDeleteMatchClick(matchId: number, event: any) {
+        event.preventDefault();
+        event.stopPropagation();
+        const deleteResponse = await removeMatch(matchId);
+        if (deleteResponse.status === 200) {
+            const updatedSeries = copyObject(this.series);
+            updatedSeries.matches = this.series.matches.filter((m: { id: number; }) => m.id !== matchId);
+            this.series = updatedSeries;
+            // TODO: add success alert snackbar
+        } else {
+            // TODO: add failure alert snackbar
+        }
     }
 }
