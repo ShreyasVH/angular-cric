@@ -3,3 +3,8 @@ node_modules
 .idea
 .angular
 src/environments/environments.ts
+angular.json
+dist
+npmInstall.log
+compile.log
+server.log

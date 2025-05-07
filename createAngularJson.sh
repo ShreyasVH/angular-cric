@@ -1,5 +1,8 @@
+PROJECT_NAME=cric
+
+cat <<EOL > angular.json
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "\$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
     "packageManager": "npm",
@@ -7,7 +10,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "skeleton": {
+    "$PROJECT_NAME": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -17,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/skeleton",
+            "outputPath": "dist/$PROJECT_NAME",
             "index": "public/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -63,13 +66,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "skeleton:build:production"
+              "browserTarget": "$PROJECT_NAME:build:production"
             },
             "development": {
-              "browserTarget": "skeleton:build:development",
+              "browserTarget": "$PROJECT_NAME:build:development",
               "host": "0.0.0.0",
               "disableHostCheck": true,
-              "port": 24051
+              "port": $PORT
             }
           },
           "defaultConfiguration": "development"
@@ -78,3 +81,4 @@
     }
   }
 }
+EOL
