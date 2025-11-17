@@ -17,6 +17,8 @@ import { TourDetailComponent } from './app/containers/tours/detail/detail.compon
 import { SeriesDetailComponent } from './app/containers/series/detail/detail.component';
 import { MatchDetailComponent } from './app/containers/matches/detail/detail.component';
 import { AppBarComponent } from './app/components/app-bar/app-bar.component';
+import { PlayerStatsComponent } from './app/containers/players/stats/stats.component';
+import { FiltersComponent } from './app/containers/filters/filters.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { AppBarComponent } from './app/components/app-bar/app-bar.component';
     AppBarComponent,
     TourDetailComponent,
     SeriesDetailComponent,
-    MatchDetailComponent
+    MatchDetailComponent,
+    PlayerStatsComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,
