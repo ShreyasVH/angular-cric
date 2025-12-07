@@ -1,5 +1,402 @@
 <div>
-    Stats
+    <div *ngIf="loaded">
+        <table mat-table *ngIf="selectedFilters.type === 'batting'" [dataSource]="stats">
+            <ng-container matColumnDef="Player ID">
+                <th mat-header-cell *matHeaderCellDef>Player ID</th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.id}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
 
-    <app-filters />
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.name}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Innings">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('innings')">
+                    Innings
+                    <span *ngIf="isSortActive('innings')">
+                        {{getSortSymbol('innings')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.innings}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Runs">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('runs')">
+                    Runs
+                    <span *ngIf="isSortActive('runs')">
+                        {{getSortSymbol('runs')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.runs}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Balls">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('balls')">
+                    Balls
+                    <span *ngIf="isSortActive('balls')">
+                        {{getSortSymbol('balls')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.balls}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Not Outs">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('notOuts')">
+                    Not Outs
+                    <span *ngIf="isSortActive('notOuts')">
+                        {{getSortSymbol('notOuts')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.notOuts}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Highest">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('highest')">
+                    Highest
+                    <span *ngIf="isSortActive('highest')">
+                        {{getSortSymbol('highest')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.highest}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fours">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('fours')">
+                    4s
+                    <span *ngIf="isSortActive('fours')">
+                        {{getSortSymbol('fours')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.fours}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Sixes">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('sixes')">
+                    6s
+                    <span *ngIf="isSortActive('sixes')">
+                        {{getSortSymbol('sixes')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.sixes}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fifties">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('fifties')">
+                    50s
+                    <span *ngIf="isSortActive('fifties')">
+                        {{getSortSymbol('fifties')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.fifties}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Hundreds">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('hundreds')">
+                    100s
+                    <span *ngIf="isSortActive('hundreds')">
+                        {{getSortSymbol('hundreds')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.hundreds}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="battingColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: battingColumns;"></tr>
+        </table>
+        <table mat-table *ngIf="selectedFilters.type === 'bowling'" [dataSource]="stats">
+            <ng-container matColumnDef="Player ID">
+                <th mat-header-cell *matHeaderCellDef>Player ID</th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.id}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.name}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Innings">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('innings')">
+                    Innings
+                    <span *ngIf="isSortActive('innings')">
+                        {{getSortSymbol('innings')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.innings}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Wickets">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('wickets')">
+                    Wickets
+                    <span *ngIf="isSortActive('wickets')">
+                        {{getSortSymbol('wickets')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.wickets}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Runs">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('runs')">
+                    Runs
+                    <span *ngIf="isSortActive('runs')">
+                        {{getSortSymbol('runs')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.runs}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Balls">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('balls')">
+                    Balls
+                    <span *ngIf="isSortActive('balls')">
+                        {{getSortSymbol('balls')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.balls}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Maidens">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('maidens')">
+                    Maidens
+                    <span *ngIf="isSortActive('maidens')">
+                        {{getSortSymbol('maidens')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.maidens}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Fifers">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('fifers')">
+                    Fifers
+                    <span *ngIf="isSortActive('fifers')">
+                        {{getSortSymbol('fifers')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.fifers}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Ten Wickets">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('tenWickets')">
+                    Ten Wickets
+                    <span *ngIf="isSortActive('tenWickets')">
+                        {{getSortSymbol('tenWickets')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.tenWickets}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="bowlingColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: bowlingColumns;"></tr>
+        </table>
+        <table mat-table *ngIf="selectedFilters.type === 'fielding'" [dataSource]="stats">
+            <ng-container matColumnDef="Player ID">
+                <th mat-header-cell *matHeaderCellDef>Player ID</th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.id}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.name}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+
+            </ng-container>
+            <ng-container matColumnDef="fielderCatches">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('fielderCatches')">
+                    Fielder Catches
+                    <span *ngIf="isSortActive('fielderCatches')">
+                        {{getSortSymbol('fielderCatches')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.fielderCatches}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+
+            </ng-container>
+            <ng-container matColumnDef="keeperCatches">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('keeperCatches')">
+                    Keeper Catches
+                    <span *ngIf="isSortActive('keeperCatches')">
+                        {{getSortSymbol('keeperCatches')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.keeperCatches}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+
+            </ng-container>
+            <ng-container matColumnDef="stumpings">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('stumpings')">
+                    Stumpings
+                    <span *ngIf="isSortActive('stumpings')">
+                        {{getSortSymbol('stumpings')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.stumpings}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+
+            </ng-container>
+            <ng-container matColumnDef="runOuts">
+                <th class="sortable" mat-header-cell *matHeaderCellDef (click)="handleSort('runOuts')">
+                    Run Outs
+                    <span *ngIf="isSortActive('runOuts')">
+                        {{getSortSymbol('runOuts')}}
+                    </span>
+                </th>
+                <td mat-cell *matCellDef="let stat">
+                    {{stat.runOuts}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+
+                </td>
+
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="fieldingColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: fieldingColumns;"></tr>
+        </table>
+
+        <div class="pagination-box">
+            <div *ngIf="page > 2" class="pagination-button" (click)="goToPage(1)">
+                {{'<<'}}
+            </div>
+
+            <div *ngIf="page > 1" class="pagination-button" (click)="goToPage(page - 1)">
+                {{'<'}}
+            </div>
+
+            <div *ngFor="let i of getPageRange()" [ngClass]="{ 'pagination-button': true, active: i === page }" (click)="goToPage(i)">
+                {{i}}
+            </div>
+
+            <div *ngIf="page < getTotalPages() - 1" class="pagination-button" (click)="goToPage(page + 1)">
+                {{'>'}}
+            </div>
+
+            <div *ngIf="page < getTotalPages() - 2" class="pagination-button" (click)="goToPage(getTotalPages())">
+                {{'>>'}}
+            </div>
+        </div>
+    </div>
+
+
+
+    <app-filters
+        [options]="options"
+        [selected]="selectedFiltersTemp"
+        [onFiltersApply]="handleApplyFilters"
+        [onEvent]="handleFilterEvent"
+        (dialogOpened)="onDialogOpened($event)"
+    />
 </div>
