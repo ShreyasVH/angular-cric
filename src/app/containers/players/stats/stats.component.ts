@@ -78,12 +78,7 @@ export class PlayerStatsComponent {
         year: {
             displayName: 'Year',
             type: FILTER_TYPE.RANGE
-        },
-        number: {
-            displayName: 'Position',
-            type: FILTER_TYPE.CHECKBOX,
-            values: [...Array(11).keys()].map(i => ({ id: String(i + 1), name: i + 1 }))
-        },
+        }
     }
     loaded: boolean = false
     filterOpen: boolean = false
