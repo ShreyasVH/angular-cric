@@ -355,9 +355,6 @@ export class PlayerStatsComponent {
     }
 
     handleFilterEvent = (event: any) => {
-        console.log('filter');
-        console.log(event);
-
         // let tempFilters = copyObject(this.selectedFiltersTemp);
         let tempFilters = this.selectedFiltersTemp;
         switch (event.filterType) {
@@ -378,7 +375,9 @@ export class PlayerStatsComponent {
                     let index = tempFilters[key].indexOf(id);
                     tempFilters[key].splice(index, 1);
                 }
-                console.log(tempFilters);
+                if (tempFilters[key].length === 0) {
+                    delete tempFilters[key];
+                }
                 break;
             }
             case FILTER_TYPE.RADIO: {
@@ -439,5 +438,25 @@ export class PlayerStatsComponent {
 
     getDisplayColumns (type: string): string[] {
         return this.columns[type].map(c => c.key);
+    };
+
+    handleClearFilter = (key: string) => {
+        let tempFilters = this.selectedFiltersTemp;
+
+        delete tempFilters[key];
+
+        // this.selectedFiltersTemp = tempFilters;
+    };
+
+    handleClearAllFilters = () => {
+        let tempFilters = this.selectedFiltersTemp;
+
+        for (const key of Object.keys(tempFilters)) {
+            if (key !== 'type') {
+                delete tempFilters[key];
+            }
+        }
+
+        // this.selectedFiltersTemp = tempFilters;
     };
 }

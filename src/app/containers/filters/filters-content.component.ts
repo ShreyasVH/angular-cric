@@ -14,6 +14,8 @@ export class FiltersContentComponent {
     data = inject<{ options: any, selected: any }>(MAT_DIALOG_DATA);
     @Input() onFiltersApply!: () => void;
     @Input() onEvent!: (event: any) => void;
+    @Input() clearFilter!: (key: string) => void;
+    @Input() clearAllFilters!: () => void;
 
     get options() {
         return this.data.options;
@@ -54,7 +56,6 @@ export class FiltersContentComponent {
     }
 
     handleEvent (event: any): void {
-        // console.log(event);
         this.onEvent && this.onEvent(event);
     }
 
@@ -62,5 +63,15 @@ export class FiltersContentComponent {
         return this.selected.hasOwnProperty(key) && 0 !== this.selected[key].length
     }
 
+    handleClearFilter (key: string): void {
+        this.clearFilter && this.clearFilter(key);
+    }
 
+    handleClearAllFilters (): void {
+        this.clearAllFilters && this.clearAllFilters();
+    }
+
+    isAnyFilterSelected () {
+        return Object.keys(this.selected).filter(k => k !== 'type').length > 0
+    }
 }

@@ -48,6 +48,8 @@
         [selected]="selectedFiltersTemp"
         [onFiltersApply]="handleApplyFilters"
         [onEvent]="handleFilterEvent"
+        [clearFilter]="handleClearFilter"
+        [clearAllFilters]="handleClearAllFilters"
         (dialogOpened)="onDialogOpened($event)"
     >
     </app-filters>

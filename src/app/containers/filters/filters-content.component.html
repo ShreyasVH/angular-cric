@@ -8,6 +8,7 @@
     <span class="spacer"></span>
 
     <button mat-button (click)="applyFilters()">Apply</button>
+    <button *ngIf="isAnyFilterSelected()" mat-button (click)="handleClearAllFilters()">Clear All</button>
   </mat-toolbar>
 
   <mat-dialog-content class="content">
@@ -21,6 +22,15 @@
         </mat-expansion-panel-header>
 
         <div *ngIf="isRadioFilter(key)">
+          <button
+            *ngIf="key !== 'type' && isFilterSelected(key)"
+            class="clear-filter"
+            color="primary"
+            mat-button
+            (click)="handleClearFilter(key)"
+          >
+            Clear
+          </button>
           <mat-radio-group>
             <mat-radio-button
                 *ngFor="let option of options[key].values"
@@ -35,6 +45,15 @@
         </div>
 
         <div *ngIf="isCheckboxFilter(key)">
+          <button
+            *ngIf="isFilterSelected(key)"
+            class="clear-filter"
+            color="primary"
+            mat-button
+            (click)="handleClearFilter(key)"
+          >
+            Clear
+          </button>
           <mat-checkbox
                 *ngFor="let option of options[key].values"
                 color="primary"
@@ -45,6 +64,15 @@
         </div>
 
         <div *ngIf="isRangeFilter(key)">
+          <button
+            *ngIf="isFilterSelected(key)"
+            class="clear-filter"
+            color="primary"
+            mat-button
+            (click)="handleClearFilter(key)"
+          >
+            Clear
+          </button>
           <mat-form-field style="margin-right: 10px">
             <mat-label>From</mat-label>
             <input

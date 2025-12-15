@@ -12,14 +12,14 @@ export class FiltersComponent {
 
     @Input() onFiltersApply!: () => void
     @Input() onEvent!: (event: any) => void
+    @Input() clearFilter!: (key: string) => void
+    @Input() clearAllFilters!: () => void
 
     @Output() dialogOpened = new EventEmitter<MatDialogRef<FiltersContentComponent>>();
 
     readonly dialog = inject(MatDialog);
 
     showFilters () {
-        console.log('showing');
-
         const ref = this.dialog.open(FiltersContentComponent, {
             width: '100vw',
             height: '100vh',
@@ -33,13 +33,9 @@ export class FiltersComponent {
 
         ref.componentInstance.onFiltersApply = this.onFiltersApply;
         ref.componentInstance.onEvent = this.onEvent;
+        ref.componentInstance.clearFilter = this.clearFilter;
+        ref.componentInstance.clearAllFilters = this.clearAllFilters;
 
         this.dialogOpened.emit(ref);
     }
-
-    // hideFilters () {
-    //     console.log('hiding');
-    //
-    //     this.dialog.closeAll();
-    // }
 }
