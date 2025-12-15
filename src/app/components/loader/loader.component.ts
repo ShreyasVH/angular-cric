@@ -18,7 +18,6 @@ export class LoaderComponent {
         this.bus.on('LOADER_SHOW')
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(e => {
-                console.log('showing in loader');
                 this.handleOpenDialog()
             });
 

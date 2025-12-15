@@ -6,7 +6,6 @@ export class LoaderService {
     constructor(private bus: EventBusService) {}
 
     show() {
-        console.log('showing loader');
         this.bus.emit({ type: 'LOADER_SHOW' });
     }
 
