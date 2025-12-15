@@ -1,12 +1,18 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 import { copyObject } from "../../../utils";
 import { getStats } from '../../../endpoints/players';
 import { getAllTeams } from '../../../endpoints/teams';
 import { getAllStadiums } from '../../../endpoints/stadiums';
-import {FILTER_TYPE} from "../../../constants";
-import {FiltersContentComponent} from "../../filters/filters-content.component";
-import {MatDialogRef} from "@angular/material/dialog";
+import { FILTER_TYPE } from "../../../constants";
+import { FiltersContentComponent } from "../../filters/filters-content.component";
+import { MatDialogRef } from "@angular/material/dialog";
 import { LoaderService } from '../../../components/loader/loader.service';
+
+interface ColumnDef {
+    displayKey: string;
+    key: string;
+    sortable?: boolean;
+}
 
 @Component({
     selector: 'app-player-stats',
@@ -94,45 +100,135 @@ export class PlayerStatsComponent {
         'runs': 'desc'
     }
     limit: number = 10
-    battingColumns: string[] = [
-        'Player ID',
-        'Name',
-        'Innings',
-        'Runs',
-        'Balls',
-        'Not Outs',
-        'Highest',
-        'Fours',
-        'Sixes',
-        'Fifties',
-        'Hundreds'
-    ]
-    bowlingColumns: string[] = [
-        'Player ID',
-        'Name',
-        'Innings',
-        'Wickets',
-        'Runs',
-        'Balls',
-        'Maidens',
-        'Fifers',
-        'Ten Wickets'
-    ]
-    fieldingColumns: string[] = [
-        'Player ID',
-        'Name',
-        'fielderCatches',
-        'keeperCatches',
-        'stumpings',
-        'runOuts'
-    ]
+    columns: Record<string, ColumnDef[]> = {
+        batting: [
+            {
+                displayKey: 'Name',
+                key: 'name',
+                sortable: false
+            },
+            {
+                displayKey: 'Innings',
+                key: 'innings',
+                sortable: true
+            },
+            {
+                displayKey: 'Runs',
+                key: 'runs',
+                sortable: true
+            },
+            {
+                displayKey: 'Balls',
+                key: 'balls',
+                sortable: true
+            },
+            {
+                displayKey: 'Not Outs',
+                key: 'notOuts',
+                sortable: true
+            },
+            {
+                displayKey: 'Highest',
+                key: 'highest',
+                sortable: true
+            },
+            {
+                displayKey: '4s',
+                key: 'fours',
+                sortable: true
+            },
+            {
+                displayKey: '6s',
+                key: 'sixes',
+                sortable: true
+            },
+            {
+                displayKey: '50s',
+                key: 'fifties',
+                sortable: true
+            },
+            {
+                displayKey: '100s',
+                key: 'hundreds',
+                sortable: true
+            }
+        ],
+        bowling: [
+            {
+                displayKey: 'Name',
+                key: 'name',
+                sortable: false
+            },
+            {
+                displayKey: 'Innings',
+                key: 'innings',
+                sortable: true
+            },
+            {
+                displayKey: 'Wickets',
+                key: 'wickets',
+                sortable: true
+            },
+            {
+                displayKey: 'Runs',
+                key: 'runs',
+                sortable: true
+            },
+            {
+                displayKey: 'Balls',
+                key: 'balls',
+                sortable: true
+            },
+            {
+                displayKey: 'Maidens',
+                key: 'maidens',
+                sortable: true
+            },
+            {
+                displayKey: 'fifers',
+                key: 'fifers',
+                sortable: true
+            },
+            {
+                displayKey: 'Ten Wickets',
+                key: 'tenWickets',
+                sortable: true
+            }
+        ],
+        fielding: [
+            {
+                displayKey: 'Name',
+                key: 'name',
+                sortable: false
+            },
+            {
+                displayKey: 'Fielder Catches',
+                key: 'fielderCatches',
+                sortable: true
+            },
+            {
+                displayKey: 'Keeper Catches',
+                key: 'keeperCatches',
+                sortable: true
+            },
+            {
+                displayKey: 'Stumpings',
+                key: 'stumpings',
+                sortable: true
+            },
+            {
+                displayKey: 'Run Outs',
+                key: 'runOuts',
+                sortable: true
+            }
+        ]
+    }
 
     Object: any = Object
 
     dialogRef?: MatDialogRef<FiltersContentComponent>;
 
     constructor(private loader: LoaderService) {}
-
 
     async ngOnInit(): Promise<void> {
         Promise.all([
@@ -314,27 +410,34 @@ export class PlayerStatsComponent {
         return (this.sortMap[key] === 'asc') ? '\u0020\u2191' : '\u0020\u2193';
     }
 
-    handleSort (key: any) {
-        const order = ((this.sortMap.hasOwnProperty(key) && this.sortMap[key] === 'desc') ? 'asc' : 'desc');
-        this.updateData(1, {
-            [key]: order
-        });
-    }
+    handleSort (key: any, type: string) {
+        const columnConfig = this.columns[type].filter(column => key === column.key);
+        if (columnConfig.length === 1 && columnConfig[0].sortable) {
+            const order = ((this.sortMap.hasOwnProperty(key) && this.sortMap[key] === 'desc') ? 'asc' : 'desc');
+            this.updateData(1, {
+                [key]: order
+            });
+        }
+    };
 
     goToPage (page: number) {
         this.updateData(page, this.sortMap);
-    }
+    };
 
-    getTotalPages() {
+    getTotalPages(): number {
         return (((this.totalCount - (this.totalCount % this.limit)) / this.limit) + (((this.totalCount % this.limit) === 0) ? 0 : 1));
-    }
+    };
 
-    getPageRange () {
+    getPageRange (): number[] {
         let range = [];
         for (let i = Math.max(1, this.page - 2); i <= Math.min(this.getTotalPages(), this.page + 2); i++) {
             range.push(i);
         }
 
         return range;
-    }
+    };
+
+    getDisplayColumns (type: string): string[] {
+        return this.columns[type].map(c => c.key);
+    };
 }
