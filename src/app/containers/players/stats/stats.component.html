@@ -20,27 +20,13 @@
             <tr mat-row *matRowDef="let row; columns: getDisplayColumns(selectedFilters.type);"></tr>
         </table>
 
-        <div class="pagination-box">
-            <div *ngIf="page > 2" class="pagination-button" (click)="goToPage(1)">
-                {{'<<'}}
-            </div>
+        <app-pagination-box
+            [page]="page"
+            [totalCount]="totalCount"
+            [goToPage]="goToPage"
+        >
 
-            <div *ngIf="page > 1" class="pagination-button" (click)="goToPage(page - 1)">
-                {{'<'}}
-            </div>
-
-            <div *ngFor="let i of getPageRange()" [ngClass]="{ 'pagination-button': true, active: i === page }" (click)="goToPage(i)">
-                {{i}}
-            </div>
-
-            <div *ngIf="page < getTotalPages() - 1" class="pagination-button" (click)="goToPage(page + 1)">
-                {{'>'}}
-            </div>
-
-            <div *ngIf="page < getTotalPages() - 2" class="pagination-button" (click)="goToPage(getTotalPages())">
-                {{'>>'}}
-            </div>
-        </div>
+        </app-pagination-box>
     </div>
 
     <app-filters

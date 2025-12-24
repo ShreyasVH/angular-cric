@@ -414,21 +414,8 @@ export class PlayerStatsComponent {
         }
     };
 
-    goToPage (page: number) {
+    goToPage = (page: number) => {
         this.updateData(page, this.sortMap);
-    };
-
-    getTotalPages(): number {
-        return (((this.totalCount - (this.totalCount % this.limit)) / this.limit) + (((this.totalCount % this.limit) === 0) ? 0 : 1));
-    };
-
-    getPageRange (): number[] {
-        let range = [];
-        for (let i = Math.max(1, this.page - 2); i <= Math.min(this.getTotalPages(), this.page + 2); i++) {
-            range.push(i);
-        }
-
-        return range;
     };
 
     getDisplayColumns (type: string): string[] {
