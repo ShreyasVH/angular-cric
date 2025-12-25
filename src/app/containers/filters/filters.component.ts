@@ -1,6 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter } from "@angular/core";
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FiltersContentComponent } from './filters-content.component';
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'app-filters',
@@ -12,30 +10,7 @@ export class FiltersComponent {
 
     @Input() onFiltersApply!: () => void
     @Input() onEvent!: (event: any) => void
+    @Input() showFilters!: () => void
     @Input() clearFilter!: (key: string) => void
     @Input() clearAllFilters!: () => void
-
-    @Output() dialogOpened = new EventEmitter<MatDialogRef<FiltersContentComponent>>();
-
-    readonly dialog = inject(MatDialog);
-
-    showFilters () {
-        const ref = this.dialog.open(FiltersContentComponent, {
-            width: '100vw',
-            height: '100vh',
-            maxWidth: '100vw',
-            panelClass: 'full-screen-dialog',
-            data: {
-                options: this.options,
-                selected: this.selected
-            }
-        });
-
-        ref.componentInstance.onFiltersApply = this.onFiltersApply;
-        ref.componentInstance.onEvent = this.onEvent;
-        ref.componentInstance.clearFilter = this.clearFilter;
-        ref.componentInstance.clearAllFilters = this.clearAllFilters;
-
-        this.dialogOpened.emit(ref);
-    }
 }

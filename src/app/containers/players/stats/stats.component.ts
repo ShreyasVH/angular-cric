@@ -1,11 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { copyObject } from "../../../utils";
 import { getStats } from '../../../endpoints/players';
 import { getAllTeams } from '../../../endpoints/teams';
 import { getAllStadiums } from '../../../endpoints/stadiums';
 import { FILTER_TYPE } from "../../../constants";
 import { FiltersContentComponent } from "../../filters/filters-content.component";
-import { MatDialogRef } from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import { LoaderService } from '../../../components/loader/loader.service';
 
 export interface ColumnDef {
@@ -223,9 +223,7 @@ export class PlayerStatsComponent {
 
     constructor(private loader: LoaderService) {}
 
-    onDialogOpened(ref: MatDialogRef<FiltersContentComponent>) {
-        this.dialogRef = ref;
-    }
+    readonly dialog = inject(MatDialog);
 
     async ngOnInit(): Promise<void> {
         Promise.all([
@@ -337,6 +335,26 @@ export class PlayerStatsComponent {
             this.hideFilters();
             this.loader.hide();
         });
+    }
+
+    showFilters = () => {
+        this.selectedFiltersTemp = copyObject(this.selectedFilters);
+
+        this.dialogRef = this.dialog.open(FiltersContentComponent, {
+            width: '100vw',
+            height: '100vh',
+            maxWidth: '100vw',
+            panelClass: 'full-screen-dialog',
+            data: {
+                options: this.options,
+                selected: this.selectedFiltersTemp
+            }
+        });
+
+        this.dialogRef.componentInstance.onFiltersApply = this.handleApplyFilters;
+        this.dialogRef.componentInstance.onEvent = this.handleFilterEvent;
+        this.dialogRef.componentInstance.clearFilter = this.handleClearFilter;
+        this.dialogRef.componentInstance.clearAllFilters = this.handleClearAllFilters;
     }
 
     hideFilters () {
