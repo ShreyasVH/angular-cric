@@ -11,10 +11,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class LoaderComponent {
 
     readonly dialog = inject(MatDialog);
-    private bus = inject(EventBusService);
     private destroyRef = inject(DestroyRef);
 
-    constructor() {
+    constructor(private bus: EventBusService) {
         this.bus.on('LOADER_SHOW')
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(e => {

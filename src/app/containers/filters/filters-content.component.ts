@@ -1,5 +1,5 @@
-import {Component, inject, Input} from "@angular/core"
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FILTER_TYPE } from '../../constants';
 
 

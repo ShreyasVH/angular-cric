@@ -1,11 +1,11 @@
-import { Component, inject } from "@angular/core";
-import { copyObject } from "../../../utils";
+import { Component, inject } from '@angular/core';
+import { copyObject } from '../../../utils';
 import { getStats } from '../../../endpoints/players';
 import { getAllTeams } from '../../../endpoints/teams';
 import { getAllStadiums } from '../../../endpoints/stadiums';
-import { FILTER_TYPE } from "../../../constants";
-import { FiltersContentComponent } from "../../filters/filters-content.component";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { FILTER_TYPE } from '../../../constants';
+import { FiltersContentComponent } from '../../filters/filters-content.component';
+import { MatDialog } from '@angular/material/dialog';
 import { LoaderService } from '../../../components/loader/loader.service';
 
 export interface ColumnDef {
@@ -22,7 +22,7 @@ export interface ColumnDef {
 export class PlayerStatsComponent {
     loaded: boolean = false
     filterOpen: boolean = false
-    options: any = {
+    filterOptions: any = {
         type: {
             displayName: 'Type',
             type: FILTER_TYPE.RADIO,
@@ -223,7 +223,6 @@ export class PlayerStatsComponent {
             }
         ]
     }
-    dialogRef?: MatDialogRef<FiltersContentComponent>;
 
     constructor(private loader: LoaderService) {}
 
@@ -235,7 +234,7 @@ export class PlayerStatsComponent {
             getAllTeams(),
             getAllStadiums()
         ]).then(([_, allTeams, allStadiums]) => {
-            const updatedFilterOptions = copyObject(this.options);
+            const updatedFilterOptions = copyObject(this.filterOptions);
 
             updatedFilterOptions['team'] = {
                 displayName: 'Team',
@@ -264,7 +263,7 @@ export class PlayerStatsComponent {
                 }))
             };
 
-            this.options = updatedFilterOptions;
+            this.filterOptions = updatedFilterOptions;
         });
     }
 
@@ -284,41 +283,13 @@ export class PlayerStatsComponent {
             'year'
         ];
 
-        const allowedSortKeys: any = {
-            'batting': [
-                'runs',
-                'innings',
-                'balls',
-                'notOuts',
-                'highest',
-                'fours',
-                'sixes',
-                'fifties',
-                'hundreds'
-            ],
-            'bowling': [
-                'wickets',
-                'innings',
-                'runs',
-                'balls',
-                'maidens',
-                'fifers',
-                'tenWickets'
-            ],
-            'fielding': [
-                'fielderCatches',
-                'keeperCatches',
-                'stumpings',
-                'runOuts'
-            ]
-        };
-
         for (const [key, values] of Object.entries(this.selectedFiltersTemp)) {
             if (key === 'type') {
                 payload.type = values;
-                if (!allowedSortKeys[payload.type].includes(Object.keys(sortMap)[0])) {
+                const allowedSortKeys = this.columns[payload.type].filter(c => c.sortable).map(c => c.key);
+                if (!allowedSortKeys.includes(Object.keys(sortMap)[0])) {
                     sortMap = {
-                        [allowedSortKeys[payload.type][0]]: 'desc'
+                        [allowedSortKeys[1]]: 'desc'
                     };
                     payload.sortMap = sortMap;
                 }
@@ -344,26 +315,26 @@ export class PlayerStatsComponent {
     showFilters = () => {
         this.selectedFiltersTemp = copyObject(this.selectedFilters);
 
-        this.dialogRef = this.dialog.open(FiltersContentComponent, {
+        const ref = this.dialog.open(FiltersContentComponent, {
             width: '100vw',
             height: '100vh',
             maxWidth: '100vw',
             panelClass: 'full-screen-dialog',
             data: {
-                options: this.options,
+                options: this.filterOptions,
                 selected: this.selectedFiltersTemp
             }
         });
 
-        this.dialogRef.componentInstance.onFiltersApply = this.handleApplyFilters;
-        this.dialogRef.componentInstance.onEvent = this.handleFilterEvent;
-        this.dialogRef.componentInstance.clearFilter = this.handleClearFilter;
-        this.dialogRef.componentInstance.clearAllFilters = this.handleClearAllFilters;
-        this.dialogRef.componentInstance.onHideFilters = this.hideFilters;
+        ref.componentInstance.onFiltersApply = this.handleApplyFilters;
+        ref.componentInstance.onEvent = this.handleFilterEvent;
+        ref.componentInstance.clearFilter = this.handleClearFilter;
+        ref.componentInstance.clearAllFilters = this.handleClearAllFilters;
+        ref.componentInstance.onHideFilters = this.hideFilters;
     }
 
-    hideFilters () {
-        this.dialogRef?.close()
+    hideFilters = () => {
+        this.dialog?.closeAll()
     }
 
     handleApplyFilters = () => {
