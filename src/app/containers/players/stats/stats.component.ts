@@ -5,7 +5,7 @@ import { getAllTeams } from '../../../endpoints/teams';
 import { getAllStadiums } from '../../../endpoints/stadiums';
 import { FILTER_TYPE } from "../../../constants";
 import { FiltersContentComponent } from "../../filters/filters-content.component";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { LoaderService } from '../../../components/loader/loader.service';
 
 export interface ColumnDef {
@@ -355,6 +355,7 @@ export class PlayerStatsComponent {
         this.dialogRef.componentInstance.onEvent = this.handleFilterEvent;
         this.dialogRef.componentInstance.clearFilter = this.handleClearFilter;
         this.dialogRef.componentInstance.clearAllFilters = this.handleClearAllFilters;
+        this.dialogRef.componentInstance.onHideFilters = this.hideFilters;
     }
 
     hideFilters () {

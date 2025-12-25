@@ -9,11 +9,10 @@ import { FILTER_TYPE } from '../../constants';
     styleUrls: ['./filters-content.component.css']
 })
 export class FiltersContentComponent {
-    constructor(private dialogRef: MatDialogRef<FiltersContentComponent>) {}
-
     data = inject<{ options: any, selected: any }>(MAT_DIALOG_DATA);
     @Input() onFiltersApply!: () => void;
     @Input() onEvent!: (event: any) => void;
+    @Input() onHideFilters!: () => void;
     @Input() clearFilter!: (key: string) => void;
     @Input() clearAllFilters!: () => void;
 
@@ -28,7 +27,7 @@ export class FiltersContentComponent {
     Object: any = Object;
 
     hideFilters () {
-        this.dialogRef.close();
+        this.onHideFilters && this.onHideFilters();
     }
 
     getFilterOptions () {
