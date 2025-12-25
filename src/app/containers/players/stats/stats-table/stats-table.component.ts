@@ -12,6 +12,7 @@ export class PlayerStatsTableComponent {
     @Input() stats: any = {}
     @Input() sortMap: any = {}
     @Input() handleSort!: (key: any, type: string) => void
+    @Input() onValueClick!: (key: any, id: any) => void
 
     getSortSymbol(key: any) {
         return (this.sortMap[key] === 'asc') ? '\u0020\u2191' : '\u0020\u2193';
@@ -23,5 +24,9 @@ export class PlayerStatsTableComponent {
 
     isSortActive (key: any) {
         return this.sortMap.hasOwnProperty(key);
+    }
+
+    handleValueClick (key: any, id: any) {
+        this.onValueClick && this.onValueClick(key, id);
     }
 }

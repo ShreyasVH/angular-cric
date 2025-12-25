@@ -12,6 +12,7 @@ export interface ColumnDef {
     displayKey: string;
     key: string;
     sortable?: boolean;
+    clickable?: boolean;
 }
 
 @Component({
@@ -101,7 +102,8 @@ export class PlayerStatsComponent {
             {
                 displayKey: 'Name',
                 key: 'name',
-                sortable: false
+                sortable: false,
+                clickable: true
             },
             {
                 displayKey: 'Innings',
@@ -153,7 +155,8 @@ export class PlayerStatsComponent {
             {
                 displayKey: 'Name',
                 key: 'name',
-                sortable: false
+                sortable: false,
+                clickable: true
             },
             {
                 displayKey: 'Innings',
@@ -195,7 +198,8 @@ export class PlayerStatsComponent {
             {
                 displayKey: 'Name',
                 key: 'name',
-                sortable: false
+                sortable: false,
+                clickable: true
             },
             {
                 displayKey: 'Fielder Catches',
@@ -446,4 +450,14 @@ export class PlayerStatsComponent {
             });
         }
     };
+
+    handlePlayerClick = (playerId: any) => {
+        console.log(playerId);
+    }
+
+    handleValueClick = (key: any, id: any) => {
+        if (key === 'name') {
+            this.handlePlayerClick(id);
+        }
+    }
 }
