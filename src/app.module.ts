@@ -11,12 +11,26 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { HomeComponent } from './app/containers/home/home.component';
 import { TourDetailComponent } from './app/containers/tours/detail/detail.component';
 import { SeriesDetailComponent } from './app/containers/series/detail/detail.component';
 import { MatchDetailComponent } from './app/containers/matches/detail/detail.component';
 import { AppBarComponent } from './app/components/app-bar/app-bar.component';
+import { PlayerStatsComponent } from './app/containers/players/stats/stats.component';
+import { PlayerStatsPaginationBoxComponent } from './app/containers/players/stats/pagination-box/pagination-box.component';
+import { PlayerStatsTableComponent } from './app/containers/players/stats/stats-table/stats-table.component';
+import { FiltersComponent } from './app/containers/filters/filters.component';
+import { FiltersContentComponent } from './app/containers/filters/filters-content.component';
+import { LoaderComponent } from './app/components/loader/loader.component';
+import { LoaderDialogComponent } from './app/components/loader/loader-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +39,14 @@ import { AppBarComponent } from './app/components/app-bar/app-bar.component';
     AppBarComponent,
     TourDetailComponent,
     SeriesDetailComponent,
-    MatchDetailComponent
+    MatchDetailComponent,
+    PlayerStatsComponent,
+    FiltersComponent,
+    FiltersContentComponent,
+    LoaderComponent,
+    LoaderDialogComponent,
+    PlayerStatsPaginationBoxComponent,
+    PlayerStatsTableComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +58,14 @@ import { AppBarComponent } from './app/components/app-bar/app-bar.component';
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

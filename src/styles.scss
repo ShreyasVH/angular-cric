@@ -94,3 +94,8 @@ body {
     }
   }
 }
+
+.custom-dialog-surface .mat-mdc-dialog-surface.mdc-dialog__surface {
+  background: transparent;
+  box-shadow: none;
+}

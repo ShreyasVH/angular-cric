@@ -1,0 +1,25 @@
+<div>
+    <div *ngIf="loaded">
+        <app-stats-table
+            [columns]="columns"
+            [selectedFilters]="selectedFilters"
+            [stats]="stats"
+            [sortMap]="sortMap"
+            [handleSort]="handleSort"
+            [onValueClick]="handleValueClick"
+        >
+        </app-stats-table>
+
+        <app-pagination-box
+            [page]="page"
+            [totalCount]="totalCount"
+            [goToPage]="goToPage"
+        >
+        </app-pagination-box>
+
+        <app-filters
+            [showFilters]="showFilters"
+        >
+        </app-filters>
+    </div>
+</div>

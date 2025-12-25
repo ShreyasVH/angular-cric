@@ -1,0 +1,98 @@
+<div>
+  <mat-toolbar color="primary">
+    <!-- Close icon -->
+    <button mat-icon-button (click)="hideFilters()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <span class="spacer"></span>
+
+    <button mat-button (click)="applyFilters()">Apply</button>
+    <button *ngIf="isAnyFilterSelected()" mat-button (click)="handleClearAllFilters()">Clear All</button>
+  </mat-toolbar>
+
+  <mat-dialog-content class="content">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let key of Object.keys(options)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{options[key].displayName}}
+            <span *ngIf="isFilterSelected(key)" class="appliedFilter"></span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="isRadioFilter(key)">
+          <button
+            *ngIf="key !== 'type' && isFilterSelected(key)"
+            class="clear-filter"
+            color="primary"
+            mat-button
+            (click)="handleClearFilter(key)"
+          >
+            Clear
+          </button>
+          <mat-radio-group>
+            <mat-radio-button
+                *ngFor="let option of options[key].values"
+                color="primary"
+                [value]="option.id"
+                [checked]="isCheckboxChecked(key, option.id)"
+                (change)="handleEvent(Object.assign($event, { filterType: 'radio', optionId: option.id, filterKey: key }))"
+            >
+              {{option.name}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div *ngIf="isCheckboxFilter(key)">
+          <button
+            *ngIf="isFilterSelected(key)"
+            class="clear-filter"
+            color="primary"
+            mat-button
+            (click)="handleClearFilter(key)"
+          >
+            Clear
+          </button>
+          <mat-checkbox
+                *ngFor="let option of options[key].values"
+                color="primary"
+                [checked]="isCheckboxChecked(key, option.id)"
+                (change)="handleEvent(Object.assign($event, { filterType: 'checkbox', optionId: option.id, filterKey: key }))">
+            {{option.name}}
+          </mat-checkbox>
+        </div>
+
+        <div *ngIf="isRangeFilter(key)">
+          <button
+            *ngIf="isFilterSelected(key)"
+            class="clear-filter"
+            color="primary"
+            mat-button
+            (click)="handleClearFilter(key)"
+          >
+            Clear
+          </button>
+          <mat-form-field style="margin-right: 10px">
+            <mat-label>From</mat-label>
+            <input
+                matInput
+                [value]="(selected.hasOwnProperty(key) && selected[key].hasOwnProperty('from')) ? selected[key].from : ''"
+                (change)="handleEvent(Object.assign($event, { filterType: 'range', filterKey: key, rangeType: 'from' }))"
+            >
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>To</mat-label>
+            <input
+              matInput
+              [value]="(selected.hasOwnProperty(key) && selected[key].hasOwnProperty('to')) ? selected[key].to : ''"
+              (change)="handleEvent(Object.assign($event, { filterType: 'range', filterKey: key, rangeType: 'to' }))"
+            >
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-dialog-content>
+
+</div>

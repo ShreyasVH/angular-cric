@@ -1,0 +1,38 @@
+<table mat-table [dataSource]="stats">
+    <ng-container
+        *ngFor="let column of columns[selectedFilters.type]"
+        [matColumnDef]="column.key"
+    >
+        <th
+            [ngClass]="{'sortable': column.sortable}"
+            mat-header-cell
+            *matHeaderCellDef
+            (click)="handleSort(column.key, selectedFilters.type)"
+        >
+            {{column.displayKey}}
+            <span *ngIf="isSortActive(column.key)">
+                {{getSortSymbol(column.key)}}
+            </span>
+        </th>
+        <td
+            [ngClass]="{'clickable': column.clickable}"
+            mat-cell
+            *matCellDef="let stat"
+            (click)="handleValueClick(column.key, stat.id)"
+        >
+            {{stat[column.key]}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+
+        </td>
+    </ng-container>
+
+    <tr
+        mat-header-row
+        *matHeaderRowDef="getDisplayColumns(selectedFilters.type)"
+    ></tr>
+    <tr
+        mat-row
+        *matRowDef="let row; columns: getDisplayColumns(selectedFilters.type);"
+    ></tr>
+</table>
