@@ -8,7 +8,7 @@ import { FiltersContentComponent } from "../../filters/filters-content.component
 import { MatDialogRef } from "@angular/material/dialog";
 import { LoaderService } from '../../../components/loader/loader.service';
 
-interface ColumnDef {
+export interface ColumnDef {
     displayKey: string;
     key: string;
     sortable?: boolean;
@@ -16,10 +16,11 @@ interface ColumnDef {
 
 @Component({
     selector: 'app-player-stats',
-    templateUrl: './stats.component.html',
-    styleUrls: ['./stats.component.css']
+    templateUrl: './stats.component.html'
 })
 export class PlayerStatsComponent {
+    loaded: boolean = false
+    filterOpen: boolean = false
     options: any = {
         type: {
             displayName: 'Type',
@@ -80,21 +81,21 @@ export class PlayerStatsComponent {
             type: FILTER_TYPE.RANGE
         }
     }
-    loaded: boolean = false
-    filterOpen: boolean = false
+    stats: any[] = []
+    totalCount: number = 0
     selectedFiltersTemp: any = {
         'type': 'batting'
     }
     selectedFilters: any = {
         'type': 'batting'
     }
-    stats: any[] = []
-    totalCount: number = 0
-    page: number = 1
     sortMap: any = {
         'runs': 'desc'
     }
+    page: number = 1
+
     limit: number = 10
+    Object: any = Object
     columns: Record<string, ColumnDef[]> = {
         batting: [
             {
@@ -218,12 +219,13 @@ export class PlayerStatsComponent {
             }
         ]
     }
-
-    Object: any = Object
-
     dialogRef?: MatDialogRef<FiltersContentComponent>;
 
     constructor(private loader: LoaderService) {}
+
+    onDialogOpened(ref: MatDialogRef<FiltersContentComponent>) {
+        this.dialogRef = ref;
+    }
 
     async ngOnInit(): Promise<void> {
         Promise.all([
@@ -262,10 +264,6 @@ export class PlayerStatsComponent {
 
             this.options = updatedFilterOptions;
         });
-    }
-
-    onDialogOpened(ref: MatDialogRef<FiltersContentComponent>) {
-        this.dialogRef = ref;
     }
 
     async updateData(selectedPage: number, sortMap: any) {
@@ -396,32 +394,6 @@ export class PlayerStatsComponent {
         // this.selectedFiltersTemp = tempFilters;
     }
 
-    isSortActive (key: any) {
-        return this.sortMap.hasOwnProperty(key);
-    }
-
-    getSortSymbol(key: any) {
-        return (this.sortMap[key] === 'asc') ? '\u0020\u2191' : '\u0020\u2193';
-    }
-
-    handleSort (key: any, type: string) {
-        const columnConfig = this.columns[type].filter(column => key === column.key);
-        if (columnConfig.length === 1 && columnConfig[0].sortable) {
-            const order = ((this.sortMap.hasOwnProperty(key) && this.sortMap[key] === 'desc') ? 'asc' : 'desc');
-            this.updateData(1, {
-                [key]: order
-            });
-        }
-    };
-
-    goToPage = (page: number) => {
-        this.updateData(page, this.sortMap);
-    };
-
-    getDisplayColumns (type: string): string[] {
-        return this.columns[type].map(c => c.key);
-    };
-
     handleClearFilter = (key: string) => {
         let tempFilters = this.selectedFiltersTemp;
 
@@ -440,5 +412,19 @@ export class PlayerStatsComponent {
         }
 
         // this.selectedFiltersTemp = tempFilters;
+    };
+
+    goToPage = (page: number) => {
+        this.updateData(page, this.sortMap);
+    };
+
+    handleSort = (key: any, type: string) => {
+        const columnConfig = this.columns[type].filter(column => key === column.key);
+        if (columnConfig.length === 1 && columnConfig[0].sortable) {
+            const order = ((this.sortMap.hasOwnProperty(key) && this.sortMap[key] === 'desc') ? 'asc' : 'desc');
+            this.updateData(1, {
+                [key]: order
+            });
+        }
     };
 }

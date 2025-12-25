@@ -26,6 +26,7 @@ import { MatchDetailComponent } from './app/containers/matches/detail/detail.com
 import { AppBarComponent } from './app/components/app-bar/app-bar.component';
 import { PlayerStatsComponent } from './app/containers/players/stats/stats.component';
 import { PlayerStatsPaginationBoxComponent } from './app/containers/players/stats/pagination-box/pagination-box.component';
+import { PlayerStatsTableComponent } from './app/containers/players/stats/stats-table/stats-table.component';
 import { FiltersComponent } from './app/containers/filters/filters.component';
 import { FiltersContentComponent } from './app/containers/filters/filters-content.component';
 import { LoaderComponent } from './app/components/loader/loader.component';
@@ -44,7 +45,8 @@ import { LoaderDialogComponent } from './app/components/loader/loader-dialog.com
     FiltersContentComponent,
     LoaderComponent,
     LoaderDialogComponent,
-    PlayerStatsPaginationBoxComponent
+    PlayerStatsPaginationBoxComponent,
+    PlayerStatsTableComponent
   ],
   imports: [
     BrowserModule,

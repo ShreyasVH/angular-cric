@@ -1,42 +1,30 @@
 <div>
     <div *ngIf="loaded">
-        <table mat-table [dataSource]="stats">
-            <ng-container *ngFor="let column of columns[selectedFilters.type]" [matColumnDef]="column.key">
-                <th [ngClass]="{'sortable': column.sortable}" mat-header-cell *matHeaderCellDef (click)="handleSort(column.key, selectedFilters.type)">
-                    {{column.displayKey}}
-                    <span *ngIf="isSortActive(column.key)">
-                        {{getSortSymbol(column.key)}}
-                    </span>
-                </th>
-                <td mat-cell *matCellDef="let stat">
-                    {{stat[column.key]}}
-                </td>
-                <td mat-footer-cell *matFooterCellDef>
-
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="getDisplayColumns(selectedFilters.type)"></tr>
-            <tr mat-row *matRowDef="let row; columns: getDisplayColumns(selectedFilters.type);"></tr>
-        </table>
+        <app-stats-table
+            [columns]="columns"
+            [selectedFilters]="selectedFilters"
+            [stats]="stats"
+            [sortMap]="sortMap"
+            [handleSort]="handleSort"
+        >
+        </app-stats-table>
 
         <app-pagination-box
             [page]="page"
             [totalCount]="totalCount"
             [goToPage]="goToPage"
         >
-
         </app-pagination-box>
-    </div>
 
-    <app-filters
-        [options]="options"
-        [selected]="selectedFiltersTemp"
-        [onFiltersApply]="handleApplyFilters"
-        [onEvent]="handleFilterEvent"
-        [clearFilter]="handleClearFilter"
-        [clearAllFilters]="handleClearAllFilters"
-        (dialogOpened)="onDialogOpened($event)"
-    >
-    </app-filters>
+        <app-filters
+            [options]="options"
+            [selected]="selectedFiltersTemp"
+            [onFiltersApply]="handleApplyFilters"
+            [onEvent]="handleFilterEvent"
+            [clearFilter]="handleClearFilter"
+            [clearAllFilters]="handleClearAllFilters"
+            (dialogOpened)="onDialogOpened($event)"
+        >
+        </app-filters>
+    </div>
 </div>
