@@ -1,6 +1,6 @@
 <div style="display: flex">
     <div class="cols-8">
-        <div *ngIf="loaded">
+        <div *ngIf="loaded()">
             <div>
                 <strong>
                     Series:
@@ -18,7 +18,7 @@
                     &nbsp;
                 </strong>
 
-                <mat-chip *ngFor="let team of getTeams()" style="margin-right: 1%" class="chip secondary">
+                <mat-chip *ngFor="let team of getTeams()" style="margin-right: 1%" class="chip">
                     {{team.name}}
                 </mat-chip>
             </div>
@@ -72,7 +72,7 @@
                             </span>
 
                             <div>
-                                <mat-chip *ngFor="let player of match.players[team.id]" style="margin: 0.5%" [class]="{chip: true, clickable: true, success: team.id === match.team1.id, error: team.id === match.team2.id}">
+                                <mat-chip *ngFor="let player of match.players[team.id]" style="margin: 0.5%" [class]="{chip: true, clickable: true, primary: team.id === match.team1.id, warn: team.id === match.team2.id}">
                                     <span (click)="handlePlayerClick(player.id)">
                                         {{getPlayerLabel(player)}}
                                     </span>
@@ -89,7 +89,7 @@
                     &nbsp;
                 </strong>
 
-                <mat-chip *ngFor="let motm of match.manOfTheMatchList" class="chip gold filled clickable">
+                <mat-chip *ngFor="let motm of match.manOfTheMatchList" class="chip accent filled clickable">
                     <span (click)="handlePlayerClick(motm.id)">
                         {{motm.name}}
                     </span>

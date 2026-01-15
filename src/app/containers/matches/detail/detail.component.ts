@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
+import {Component, signal} from '@angular/core';
 import { formatDateTimeString } from '../../../utils';
 import { getMatch } from '../../../endpoints/matches'
 import {Router} from "@angular/router";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatTableModule} from "@angular/material/table";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'app-match-detail',
-    templateUrl: './detail.component.html'
+    templateUrl: './detail.component.html',
+    imports: [MatChipsModule, MatTableModule, CommonModule]
 })
 export class MatchDetailComponent {
     constructor(private router: Router) { }
 
     match: any = {}
-    loaded: boolean = false
+    loaded = signal<boolean>(false);
     scoreColumns: any = ['Batsman', 'Dismissal', 'Runs', 'Balls', 'Fours', 'Sixes']
     figureColumns: any = ['Bowler', 'Overs', 'Maidens', 'Runs', 'Wickets']
 
@@ -20,7 +24,7 @@ export class MatchDetailComponent {
         const id = parseInt(urlSearchParams.get('id') ?? '0', 10);
         const matchResponse = await getMatch(id);
         this.match = matchResponse.data.data;
-        this.loaded = true;
+        this.loaded.set(true);
     }
 
     handleSeriesClick(id: number) {

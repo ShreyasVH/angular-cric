@@ -1,9 +1,9 @@
 <div>
-    <div *ngIf="loaded">
+    <div *ngIf="loaded()">
         <app-stats-table
             [columns]="columns"
             [selectedFilters]="selectedFilters"
-            [stats]="stats"
+            [stats]="stats()"
             [sortMap]="sortMap"
             [handleSort]="handleSort"
             [onValueClick]="handleValueClick"

@@ -1,9 +1,12 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import {Component, OnChanges, signal, SimpleChanges} from '@angular/core';
 import { formatDateTimeString } from '../../utils';
 import { getAllYears, getToursForYear } from '../../endpoints/tours'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
+import {CommonModule} from "@angular/common";
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const yearParam = urlSearchParams.get('year');
@@ -11,21 +14,22 @@ const selectedYear = yearParam ? parseInt(yearParam, 10) : (new Date()).getFullY
 
 @Component({
     selector: 'app-home',
-    templateUrl: './home.component.html'
+    templateUrl: './home.component.html',
+    imports: [MatCardModule, MatButtonModule, CommonModule]
 })
 export class HomeComponent {
     constructor(private router: Router, private route: ActivatedRoute) { }
 
-    years: number[] = []
+    years = signal<number[]>([]);
     year: number = selectedYear
     pageSize: number = 25
     totalPages: number = 1
     page: number = 1
-    tours: any[] = []
+    tours = signal<any>([]);
 
     async ngOnInit(): Promise<void> {
         const yearsResponse = await getAllYears();
-        this.years = yearsResponse.data.data;
+        this.years.set(yearsResponse.data.data);
 
         this.route.queryParamMap.pipe(
             switchMap(async (params: ParamMap) => {
@@ -50,15 +54,14 @@ export class HomeComponent {
     handleDataUpdate (toursResponse: any, page: number) {
         const toursData = toursResponse.data.data;
 
-        let finalTours: any[] = [];
         if (page === 1) {
             const totalCount = toursData.totalCount;
             this.totalPages = Math.ceil(totalCount / this.totalPages);
-            finalTours = toursData.items;
+            this.tours.set(toursData.items);
         } else {
-            finalTours = this.tours.concat(toursData.items);
+            this.tours.update(t => t.concat(toursData.items));
         }
-        this.tours = finalTours
+
     }
 
     handleYearClick(year: number) {

@@ -1,12 +1,23 @@
 import { Component, inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FILTER_TYPE } from '../../constants';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {CommonModule} from "@angular/common";
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
 
 
 @Component({
     selector: 'app-filters-content',
     templateUrl: './filters-content.component.html',
-    styleUrls: ['./filters-content.component.css']
+    styleUrls: ['./filters-content.component.css'],
+    imports: [MatFormFieldModule, MatCheckboxModule, MatRadioModule, MatExpansionModule, MatDialogModule, MatIconModule, MatToolbarModule, CommonModule, MatButtonModule, MatInputModule]
 })
 export class FiltersContentComponent {
     data = inject<{ options: any, selected: any }>(MAT_DIALOG_DATA);
