@@ -1,10 +1,13 @@
 import { Component, Input } from "@angular/core";
 import { ColumnDef } from '../stats.component';
+import {MatTableModule} from "@angular/material/table";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'app-stats-table',
     templateUrl: './stats-table.component.html',
-    styleUrls: ['./stats-table.component.css']
+    styleUrls: ['./stats-table.component.css'],
+    imports: [MatTableModule, CommonModule]
 })
 export class PlayerStatsTableComponent {
     @Input() columns: Record<string, ColumnDef[]> = {}

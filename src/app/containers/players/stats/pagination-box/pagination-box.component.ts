@@ -1,9 +1,12 @@
 import { Component, Input } from "@angular/core";
+import {MatButtonModule} from "@angular/material/button";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'app-pagination-box',
     templateUrl: './pagination-box.component.html',
-    styleUrls: ['./pagination-box.component.css']
+    styleUrls: ['./pagination-box.component.css'],
+    imports: [MatButtonModule, CommonModule]
 })
 export class PlayerStatsPaginationBoxComponent {
     @Input() page: number = 1

@@ -1,29 +1,123 @@
 @use '@angular/material' as mat;
 
-@include mat.core();
+html {
+        @include mat.theme((
+                color: (
+                        primary: mat.$azure-palette,
+                        tertiary: mat.$orange-palette,
+                        theme-type: light,
+                ),
+                typography: Roboto,
+                density: 0
+        ));
+}
 
-$my-primary: mat.define-palette(mat.$blue-palette, 400, 700, 200, A700);
-$my-secondary: mat.define-palette(mat.$purple-palette, 300);
-$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$my-white: mat.define-palette(mat.$red-palette);
-$my-success: mat.define-palette(mat.$green-palette, 500);
+.primary {
+        @include mat.button-overrides((
+                filled-container-color: rgb(66, 165, 245),
+                outlined-outline-color: rgb(66, 165, 245),
+                outlined-label-text-color: rgb(66, 165, 245),
+                outlined-state-layer-color: rgb(66, 165, 245),
+                text-label-text-color: rgb(66, 165, 245),
+                text-state-layer-color: rgb(66, 165, 245)
+        ));
 
-// The "warn" palette is optional and defaults to red if not specified.
-$my-warn: mat.define-palette(mat.$red-palette);
+        @include mat.toolbar-overrides((
+                container-background-color: rgb(66, 165, 245)
+        ));
 
-$my-theme: mat.define-light-theme((
-        color: (
-                primary: $my-primary,
-                accent: $my-secondary,
-                warn: $my-warn,
-                secondary: $my-secondary,
-                success: $my-success,
-        ),
-        contrast: (
-                primary: $my-white
-        ),
-        typography: mat.define-typography-config(),
-        density: 0,
-));
+        @include mat.checkbox-overrides((
+                selected-icon-color: rgb(66, 165, 245),
+                selected-hover-icon-color: rgb(66, 165, 245),
+                selected-hover-state-layer-color: rgb(66, 165, 245),
+                selected-pressed-icon-color: rgb(66, 165, 245),
+                selected-pressed-state-layer-color: rgb(66, 165, 245),
+                selected-focus-icon-color: rgb(66, 165, 245),
+                selected-focus-state-layer-color: rgb(66, 165, 245),
+        ));
 
-@include mat.all-component-themes($my-theme);
+        @include mat.progress-spinner-overrides((
+                active-indicator-color: rgb(66, 165, 245),
+        ));
+
+        @include mat.chips-overrides((
+                outline-color: rgb(66, 165, 245),
+                label-text-color: rgb(66, 165, 245),
+                hover-state-layer-color: rgb(66, 165, 245),
+        ));
+
+        @include mat.fab-overrides((
+                container-color: rgb(66, 165, 245)
+        ));
+}
+
+.accent {
+        @include mat.button-overrides((
+                filled-container-color: rgb(186, 104, 200),
+                outlined-outline-color: rgb(186, 104, 200),
+                outlined-label-text-color: rgb(186, 104, 200),
+                outlined-state-layer-color: rgb(186, 104, 200),
+                text-label-text-color: rgb(186, 104, 200),
+                text-state-layer-color: rgb(186, 104, 200)
+        ));
+
+        @include mat.checkbox-overrides((
+                selected-icon-color: rgb(186, 104, 200),
+                selected-hover-icon-color: rgb(186, 104, 200),
+                selected-hover-state-layer-color: rgb(186, 104, 200),
+                selected-pressed-icon-color: rgb(186, 104, 200),
+                selected-pressed-state-layer-color: rgb(186, 104, 200),
+                selected-focus-icon-color: rgb(186, 104, 200),
+                selected-focus-state-layer-color: rgb(186, 104, 200),
+        ));
+
+        @include mat.chips-overrides((
+                outline-color: rgb(186, 104, 200),
+                label-text-color: rgb(186, 104, 200),
+                hover-state-layer-color: rgb(186, 104, 200),
+        ));
+}
+
+.warn {
+        @include mat.button-overrides((
+                filled-container-color: rgb(244, 67, 54),
+                outlined-outline-color: rgb(244, 67, 54),
+                outlined-label-text-color: rgb(244, 67, 54),
+                outlined-state-layer-color: rgb(244, 67, 54),
+                text-label-text-color: rgb(244, 67, 54),
+                text-state-layer-color: rgb(244, 67, 54),
+        ));
+
+        @include mat.icon-button-overrides((
+                icon-color: rgb(244, 67, 54)
+        ));
+
+        @include mat.checkbox-overrides((
+                selected-icon-color: rgb(244, 67, 54),
+                selected-hover-icon-color: rgb(244, 67, 54),
+                selected-hover-state-layer-color: rgb(244, 67, 54),
+                selected-pressed-icon-color: rgb(244, 67, 54),
+                selected-pressed-state-layer-color: rgb(244, 67, 54),
+                selected-focus-icon-color: rgb(244, 67, 54),
+                selected-focus-state-layer-color: rgb(244, 67, 54),
+        ));
+
+        @include mat.chips-overrides((
+                outline-color: rgb(244, 67, 54),
+                label-text-color: rgb(244, 67, 54),
+                hover-state-layer-color: rgb(244, 67, 54),
+        ));
+}
+
+.white {
+        @include mat.icon-button-overrides((
+                icon-color: white
+        ));
+}
+
+:root {
+        @include mat.button-overrides((
+                filled-container-shape: 4px,
+                outlined-container-shape: 4px
+        ));
+}

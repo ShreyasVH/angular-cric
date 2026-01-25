@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import { copyObject } from '../../../utils';
 import { getStats } from '../../../endpoints/players';
 import { getAllTeams } from '../../../endpoints/teams';
@@ -7,6 +7,10 @@ import { FILTER_TYPE } from '../../../constants';
 import { FiltersContentComponent } from '../../filters/filters-content.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LoaderService } from '../../../components/loader/loader.service';
+import {FiltersComponent} from "../../filters/filters.component";
+import {PlayerStatsPaginationBoxComponent} from "./pagination-box/pagination-box.component";
+import {PlayerStatsTableComponent} from "./stats-table/stats-table.component";
+import {CommonModule} from "@angular/common";
 
 export interface ColumnDef {
     displayKey: string;
@@ -17,10 +21,11 @@ export interface ColumnDef {
 
 @Component({
     selector: 'app-player-stats',
-    templateUrl: './stats.component.html'
+    templateUrl: './stats.component.html',
+    imports: [FiltersComponent, PlayerStatsPaginationBoxComponent, PlayerStatsTableComponent, CommonModule]
 })
 export class PlayerStatsComponent {
-    loaded: boolean = false
+    loaded = signal<boolean>(false);
     filterOpen: boolean = false
     filterOptions: any = {
         type: {
@@ -82,7 +87,7 @@ export class PlayerStatsComponent {
             type: FILTER_TYPE.RANGE
         }
     }
-    stats: any[] = []
+    stats = signal<any[]>([]);
     totalCount: number = 0
     selectedFiltersTemp: any = {
         'type': 'batting'
@@ -301,12 +306,12 @@ export class PlayerStatsComponent {
         }
 
         getStats(payload).then(statsResponse => {
-            this.stats = statsResponse.data.data.stats;
+            this.stats.set(statsResponse.data.data.stats);
             this.totalCount = statsResponse.data.data.count;
             this.selectedFilters = copyObject(this.selectedFiltersTemp);
             this.page = selectedPage;
             this.sortMap = sortMap;
-            this.loaded = true;
+            this.loaded.set(true);
             this.hideFilters();
             this.loader.hide();
         });

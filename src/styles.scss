@@ -1,4 +1,4 @@
-@import 'themes';
+@use 'themes';
 
 body {
   font-family: 'Helvetica';
@@ -55,42 +55,11 @@ body {
 }
 
 .chip {
-  background-color: #f3f6f9 !important;
+  //background-color: #f3f6f9 !important;
 
   &.clickable {
     span {
       cursor: pointer;
-    }
-  }
-
-  &.secondary {
-    border: 1px solid #ba68c8;
-    .mat-mdc-chip-action-label {
-      color: #ba68c8 !important;
-    }
-  }
-
-  &.success {
-    border: 1px solid #4caf50;
-    .mat-mdc-chip-action-label {
-      color: #4caf50 !important;
-    }
-  }
-
-  &.error {
-    border: 1px solid #ef5350;
-    .mat-mdc-chip-action-label {
-      color: #ef5350 !important;
-    }
-  }
-
-  &.gold {
-    border: 1px solid #e0aa3e;
-    &.filled {
-      background-color: #e0aa3e !important;
-      .mat-mdc-chip-action-label {
-        color: white !important;
-      }
     }
   }
 }

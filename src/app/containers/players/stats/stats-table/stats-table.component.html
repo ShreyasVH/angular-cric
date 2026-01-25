@@ -4,7 +4,7 @@
         [matColumnDef]="column.key"
     >
         <th
-            [ngClass]="{'sortable': column.sortable}"
+            [class.sortable]="column.sortable"
             mat-header-cell
             *matHeaderCellDef
             (click)="handleSort(column.key, selectedFilters.type)"
@@ -15,7 +15,7 @@
             </span>
         </th>
         <td
-            [ngClass]="{'clickable': column.clickable}"
+            [class.clickable]="column.clickable"
             mat-cell
             *matCellDef="let stat"
             (click)="handleValueClick(column.key, stat.id)"

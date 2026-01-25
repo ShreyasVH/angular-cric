@@ -18,17 +18,17 @@ cat <<EOL > angular.json
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/$PROJECT_NAME",
             "index": "public/index.html",
-            "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/assets"
+              {
+                  "glob": "**/*",
+                  "input": "public"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -52,30 +52,29 @@ cat <<EOL > angular.json
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "$PROJECT_NAME:build:production"
+              "buildTarget": "$PROJECT_NAME:build:production"
             },
             "development": {
-              "browserTarget": "$PROJECT_NAME:build:development",
+              "buildTarget": "$PROJECT_NAME:build:development",
               "host": "0.0.0.0",
-              "disableHostCheck": true,
               "port": $PORT
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "allowedHosts": ["${ALLOWED_HOSTS}"]
+          }
         }
       }
     }

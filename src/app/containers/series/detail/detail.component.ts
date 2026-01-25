@@ -1,25 +1,29 @@
-import { Component } from '@angular/core';
+import {Component, signal} from '@angular/core';
 import { formatDateTimeString, copyObject } from '../../../utils';
 import { getById } from '../../../endpoints/series';
 import { removeMatch } from '../../../endpoints/matches';
 import {Router} from "@angular/router";
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonModule} from "@angular/material/button";
+import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'app-series-detail',
-    templateUrl: './detail.component.html'
+    templateUrl: './detail.component.html',
+    imports: [MatCardModule, MatButtonModule, CommonModule]
 })
 export class SeriesDetailComponent {
     constructor(private router: Router) { }
 
     series: any = {}
-    loaded: boolean = false
+    loaded = signal<boolean>(false);
 
     async ngOnInit(): Promise<void> {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const id = parseInt(urlSearchParams.get('id') ?? '0', 10);
         const seriesResponse = await getById(id);
         this.series = seriesResponse.data.data;
-        this.loaded = true;
+        this.loaded.set(true);
     }
 
     getFormattedDate(dateTimeString: string): string {

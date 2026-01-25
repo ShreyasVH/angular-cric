@@ -1,14 +1,14 @@
 <div>
-  <mat-toolbar color="primary">
+  <mat-toolbar class="primary">
     <!-- Close icon -->
-    <button mat-icon-button (click)="hideFilters()">
+    <button matIconButton (click)="hideFilters()">
       <mat-icon>close</mat-icon>
     </button>
 
     <span class="spacer"></span>
 
-    <button mat-button (click)="applyFilters()">Apply</button>
-    <button *ngIf="isAnyFilterSelected()" mat-button (click)="handleClearAllFilters()">Clear All</button>
+    <button matButton (click)="applyFilters()">Apply</button>
+    <button *ngIf="isAnyFilterSelected()" matButton class="primary" (click)="handleClearAllFilters()">Clear All</button>
   </mat-toolbar>
 
   <mat-dialog-content class="content">
