@@ -5,6 +5,7 @@ import { TourDetailComponent } from './app/containers/tours/detail/detail.compon
 import { SeriesDetailComponent } from './app/containers/series/detail/detail.component';
 import { MatchDetailComponent } from './app/containers/matches/detail/detail.component';
 import { PlayerStatsComponent } from './app/containers/players/stats/stats.component';
+import { PlayerDetailsComponent } from './app/containers/players/details/details.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
     { path: 'tours/detail', component: TourDetailComponent },
     { path: 'series/detail', component: SeriesDetailComponent },
     { path: 'matches/detail', component: MatchDetailComponent },
-    { path: 'players/stats', component: PlayerStatsComponent }
+    { path: 'players/stats', component: PlayerStatsComponent },
+    { path: 'players/detail', component: PlayerDetailsComponent }
 ];
 

@@ -1,0 +1,11 @@
+<div>
+    <div *ngIf="loaded">
+        <h1>Player Details</h1>
+
+        <div style="display: flex">
+            <div *ngFor="let gameType of getBattingGameTypes()" class="cols-4">
+                {{gameType}}
+            </div>
+        </div>
+    </div>
+</div>
