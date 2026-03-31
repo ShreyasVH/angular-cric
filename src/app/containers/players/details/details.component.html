@@ -2,9 +2,68 @@
     <div *ngIf="loaded">
         <h1>Player Details</h1>
 
-        <div style="display: flex">
-            <div *ngFor="let gameType of getBattingGameTypes()" class="cols-4">
-                {{gameType}}
+        <div style="display: flex;  gap: 24px;">
+            <div *ngFor="let gameType of getBattingGameTypes()" class="cols-4" style="display: flex; justify-content: center;">
+                <mat-card class="example-card" appearance="raised" style="max-width: 300px; text-align: center;">
+                    <mat-card-header style="margin-left: auto; margin-right: auto">
+                        <mat-card-title>{{details().name}}</mat-card-title>
+                        <mat-card-subtitle>{{gameType}}</mat-card-subtitle>
+                    </mat-card-header>
+
+                    <img src="https://res.cloudinary.com/dyoxubvbg/image/upload/v1577106216/artists/default_m.jpg" height="200" width="200" style="margin-left: auto; margin-right: auto" />
+
+                    <mat-card-content>
+                        <div style="text-align: left">
+                            <div style="display: flex; gap: 24px;">
+                                <div class="cols-lg-6">
+                                    <p *ngFor="let field of column1Fields" style="font-size: small">
+                                        <strong>{{field.displayName}}:</strong>
+                                        {{getWrappedValue(details(), 'battingStats', gameType, field.key)}}
+                                    </p>
+
+
+
+                                    <p style="font-size: small">
+                                        <strong>50/100: </strong>
+                                        {{getWrappedValue(details(), 'battingStats', gameType, 'fifties')}}/{{getWrappedValue(details(), 'battingStats', gameType, 'hundreds')}}
+                                    </p>
+                                </div>
+
+                                <div class="cols-lg-6">
+                                    <p *ngFor="let field of column2Fields" style="font-size: small">
+                                        <strong>{{field.displayName}}:</strong>
+                                        {{getWrappedValue(details(), field.statsType, gameType, field.key)}}
+                                    </p>
+
+                                    <p style="font-size: small">
+                                        <strong>DOB: </strong>
+                                        {{getDateOfBirth(details().dateOfBirth)}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+        <br />
+        <hr />
+        <br />
+
+        <h2>Dismissal Stats</h2>
+
+        <div style="display: flex;  gap: 24px;">
+            <div *ngFor="let gameType of getDismissalModeGameTypes()" class="cols-4" style="display: flex; justify-content: center; width: 400px; height: 400px">
+                <canvas
+                        baseChart
+                        [data]="formatDismissalStatsForRender(details().dismissalStats[gameType])"
+                        [options]="getChartOptions(gameType)"
+                        [type]="'doughnut'"
+                        height="400"
+                        width="400"
+                >
+                </canvas>
             </div>
         </div>
     </div>
