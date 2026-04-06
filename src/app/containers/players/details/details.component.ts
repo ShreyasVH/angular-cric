@@ -15,6 +15,12 @@ export class PlayerDetailsComponent {
     loaded = signal<boolean>(false);
     details = signal<any>({});
 
+    typeOrder: any = {
+        'Test': 1,
+        'ODI': 2,
+        'T20': 3
+    };
+
     async ngOnInit(): Promise<void> {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const id = parseInt(urlSearchParams.get('id') ?? '0', 10);
@@ -27,11 +33,19 @@ export class PlayerDetailsComponent {
     }
 
     getBattingGameTypes = () => {
-        return Object.keys(this.details().battingStats);
+        const types = Object.keys(this.details().battingStats);
+        types.sort((a, b) => {
+            return this.typeOrder[a] - this.typeOrder[b];
+        });
+        return types;
     }
 
     getDismissalModeGameTypes = () => {
-        return Object.keys(this.details().dismissalStats);
+        const types = Object.keys(this.details().dismissalStats);
+        types.sort((a, b) => {
+            return this.typeOrder[a] - this.typeOrder[b];
+        });
+        return types;
     }
 
     getChartOptions = (gameType: any): ChartConfiguration<'doughnut'>['options'] => ({
