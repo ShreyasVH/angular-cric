@@ -429,7 +429,7 @@ export class PlayerStatsComponent {
     };
 
     handlePlayerClick = (playerId: any) => {
-        this.router.navigate(['/players/detail'], { queryParams: { id: playerId } });
+        this.router.navigate(['/players/details'], { queryParams: { id: playerId } });
     }
 
     handleValueClick = (key: any, id: any) => {

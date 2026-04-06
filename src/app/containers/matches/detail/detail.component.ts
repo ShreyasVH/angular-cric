@@ -32,7 +32,7 @@ export class MatchDetailComponent {
     }
 
     handlePlayerClick(playerId: number) {
-        this.router.navigate(['/players/detail'], { queryParams: { id: playerId } });
+        this.router.navigate(['/players/details'], { queryParams: { id: playerId } });
     }
 
     getTeams() {
