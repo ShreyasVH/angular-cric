@@ -11,6 +11,7 @@ import {FiltersComponent} from "../../filters/filters.component";
 import {PlayerStatsPaginationBoxComponent} from "./pagination-box/pagination-box.component";
 import {PlayerStatsTableComponent} from "./stats-table/stats-table.component";
 import {CommonModule} from "@angular/common";
+import { Router } from '@angular/router';
 
 export interface ColumnDef {
     displayKey: string;
@@ -229,7 +230,7 @@ export class PlayerStatsComponent {
         ]
     }
 
-    constructor(private loader: LoaderService) {}
+    constructor(private loader: LoaderService, private router: Router) {}
 
     readonly dialog = inject(MatDialog);
 
@@ -428,7 +429,7 @@ export class PlayerStatsComponent {
     };
 
     handlePlayerClick = (playerId: any) => {
-        console.log(playerId);
+        this.router.navigate(['/players/details'], { queryParams: { id: playerId } });
     }
 
     handleValueClick = (key: any, id: any) => {

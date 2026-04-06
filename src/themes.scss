@@ -120,4 +120,10 @@ html {
                 filled-container-shape: 4px,
                 outlined-container-shape: 4px
         ));
+
+        @include mat.card-overrides((
+                subtitle-text-color: #9b9b9b,
+                filled-container-color: white,
+                elevated-container-color: white
+        ));
 }
