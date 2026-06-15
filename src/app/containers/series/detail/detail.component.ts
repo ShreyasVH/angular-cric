@@ -16,14 +16,14 @@ import { LoaderService } from '../../../components/loader/loader.service';
 export class SeriesDetailComponent {
     constructor(private loader: LoaderService, private router: Router) { }
 
-    series: any = {}
+    series = signal<any>({});
     loaded = signal<boolean>(false);
 
     async ngOnInit(): Promise<void> {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const id = parseInt(urlSearchParams.get('id') ?? '0', 10);
         const seriesResponse = await getById(id);
-        this.series = seriesResponse.data.data;
+        this.series.set(seriesResponse.data.data);
         this.loaded.set(true);
     }
 
@@ -81,9 +81,9 @@ export class SeriesDetailComponent {
         this.loader.show();
         const deleteResponse = await removeMatch(matchId);
         if (deleteResponse.status === 200) {
-            const updatedSeries = copyObject(this.series);
-            updatedSeries.matches = this.series.matches.filter((m: { id: number; }) => m.id !== matchId);
-            this.series = updatedSeries;
+            const updatedSeries = copyObject(this.series());
+            updatedSeries.matches = this.series().matches.filter((m: { id: number; }) => m.id !== matchId);
+            this.series.set(updatedSeries);
             // TODO: add success alert snackbar
         } else {
             // TODO: add failure alert snackbar
