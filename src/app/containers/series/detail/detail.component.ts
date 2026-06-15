@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {CommonModule} from "@angular/common";
+import { LoaderService } from '../../../components/loader/loader.service';
 
 @Component({
     selector: 'app-series-detail',
@@ -13,7 +14,7 @@ import {CommonModule} from "@angular/common";
     imports: [MatCardModule, MatButtonModule, CommonModule]
 })
 export class SeriesDetailComponent {
-    constructor(private router: Router) { }
+    constructor(private loader: LoaderService, private router: Router) { }
 
     series: any = {}
     loaded = signal<boolean>(false);
@@ -77,6 +78,7 @@ export class SeriesDetailComponent {
     async handleDeleteMatchClick(matchId: number, event: any) {
         event.preventDefault();
         event.stopPropagation();
+        this.loader.show();
         const deleteResponse = await removeMatch(matchId);
         if (deleteResponse.status === 200) {
             const updatedSeries = copyObject(this.series);
@@ -86,5 +88,6 @@ export class SeriesDetailComponent {
         } else {
             // TODO: add failure alert snackbar
         }
+        this.loader.hide();
     }
 }
