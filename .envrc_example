@@ -1,4 +1,4 @@
-# node 26.3.0 path
+# node 26.3.1 path
 export PATH=
 
 export API_ENDPOINT=
@@ -6,7 +6,7 @@ export PRODUCTION=
 
 export PORT=
 
-# jq 1.8.1 path
+# jq 1.8.2 path
 export PATH=
 
 export ALLOWED_HOSTS="cric.angular.com"
