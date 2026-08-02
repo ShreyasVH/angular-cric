@@ -8,3 +8,4 @@ dist
 npmInstall.log
 compile.log
 server.log
+ncuLog.txt
