@@ -275,7 +275,7 @@ export class PlayerStatsComponent {
                 displayName: 'Series Tags',
                 type: FILTER_TYPE.CHECKBOX,
                 values: allTags.filter(tag => tag.type === 'SERIES').map(tag => ({
-                    id: tag.id,
+                    id: JSON.stringify(tag.id),
                     name: tag.name
                 }))
             };
