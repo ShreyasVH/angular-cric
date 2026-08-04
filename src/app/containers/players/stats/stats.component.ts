@@ -3,6 +3,7 @@ import { copyObject } from '../../../utils';
 import { getStats } from '../../../endpoints/players';
 import { getAllTeams } from '../../../endpoints/teams';
 import { getAllStadiums } from '../../../endpoints/stadiums';
+import { getAllTags } from '../../../endpoints/tags';
 import { FILTER_TYPE } from '../../../constants';
 import { FiltersContentComponent } from '../../filters/filters-content.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -238,8 +239,9 @@ export class PlayerStatsComponent {
         Promise.all([
             this.updateData(1, this.sortMap),
             getAllTeams(),
-            getAllStadiums()
-        ]).then(([_, allTeams, allStadiums]) => {
+            getAllStadiums(),
+            getAllTags()
+        ]).then(([_, allTeams, allStadiums, allTags]) => {
             const updatedFilterOptions = copyObject(this.filterOptions);
 
             updatedFilterOptions['team'] = {
@@ -266,6 +268,15 @@ export class PlayerStatsComponent {
                 values: allStadiums.map(stadium => ({
                     id: JSON.stringify(stadium.id),
                     name: stadium.name
+                }))
+            };
+
+            updatedFilterOptions['seriesTags'] = {
+                displayName: 'Series Tags',
+                type: FILTER_TYPE.CHECKBOX,
+                values: allTags.filter(tag => tag.type === 'SERIES').map(tag => ({
+                    id: JSON.stringify(tag.id),
+                    name: tag.name
                 }))
             };
 
