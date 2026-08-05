@@ -280,6 +280,15 @@ export class PlayerStatsComponent {
                 }))
             };
 
+            updatedFilterOptions['matchTags'] = {
+                displayName: 'Match Tags',
+                type: FILTER_TYPE.CHECKBOX,
+                values: allTags.filter(tag => tag.type === 'MATCH').map(tag => ({
+                    id: JSON.stringify(tag.id),
+                    name: tag.name
+                }))
+            };
+
             this.filterOptions = updatedFilterOptions;
         });
     }
