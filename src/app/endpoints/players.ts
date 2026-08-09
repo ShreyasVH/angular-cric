@@ -11,3 +11,8 @@ export const getDetails = async (id: number): Promise<any> => {
     const url = endpoint + `/cric/v1/players/${id}`;
     return get(url);
 };
+
+export const search = async (keyword: string): Promise<any> => {
+    const url = `${endpoint}/cric/v1/players/search?keyword=${keyword}&page=1&limit=25`;
+    return get(url);
+}
