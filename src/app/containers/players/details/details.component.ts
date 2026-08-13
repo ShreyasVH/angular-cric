@@ -28,8 +28,6 @@ export class PlayerDetailsComponent {
 
             const playerId = Number(id);
 
-            console.log('playerId:', playerId);
-
             const playerDetailsResponse = await getDetails(playerId);
 
             this.details.set(playerDetailsResponse.data.data);

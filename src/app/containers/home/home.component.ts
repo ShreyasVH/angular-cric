@@ -79,8 +79,8 @@ export class HomeComponent {
         const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
         const windowBottom = windowHeight + window.pageYOffset;
 
-        if (windowBottom >= (docHeight - 200)) {
-            if (this.tours().length > 0 && this.page < this.totalPages) {
+        if (windowBottom >= docHeight) {
+            if (this.tours.length > 0 && this.page < this.totalPages) {
                 this.page = this.page + 1;
                 const toursResponse = await getToursForYear(this.year, this.page, this.pageSize);
                 this.handleDataUpdate(toursResponse, this.page);

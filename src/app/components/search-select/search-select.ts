@@ -39,6 +39,9 @@ export default class SearchSelect {
         if (keyword.length >= 2) {
             this.options.set(await this.searchItems(keyword));
             this.open.set(true);
+        } else {
+            this.open.set(false);
+            this.options.set([]);
         }
     }
 
