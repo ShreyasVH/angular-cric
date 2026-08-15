@@ -1,0 +1,8 @@
+<mat-slide-toggle
+        [checked]="themeService.mode === 'dark'"
+        (change)="themeService.toggleTheme()"
+        class="accent"
+        hideIcon
+>
+    {{ themeService.mode === 'dark' ? 'Dark mode' : 'Light mode' }}
+</mat-slide-toggle>
