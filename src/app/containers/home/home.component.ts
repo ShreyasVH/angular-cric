@@ -56,11 +56,12 @@ export class HomeComponent {
 
         if (page === 1) {
             const totalCount = toursData.totalCount;
-            this.totalPages = Math.ceil(totalCount / this.totalPages);
+            this.totalPages = Math.ceil(totalCount / this.pageSize);
             this.tours.set(toursData.items);
         } else {
             this.tours.update(t => t.concat(toursData.items));
         }
+        this.page = page;
 
     }
 
@@ -79,8 +80,8 @@ export class HomeComponent {
         const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
         const windowBottom = windowHeight + window.pageYOffset;
 
-        if (windowBottom >= docHeight) {
-            if (this.tours.length > 0 && this.page < this.totalPages) {
+        if (Math.round(windowBottom) >= docHeight) {
+            if (this.tours().length > 0 && this.page < this.totalPages) {
                 this.page = this.page + 1;
                 const toursResponse = await getToursForYear(this.year, this.page, this.pageSize);
                 this.handleDataUpdate(toursResponse, this.page);
