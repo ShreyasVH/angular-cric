@@ -1,0 +1,25 @@
+<div class="search-select">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="full-width">
+        <mat-label>Search</mat-label>
+
+        <input
+                matInput
+                autocomplete="off"
+                [value]="value"
+                (input)="handleChange($event)"
+        />
+    </mat-form-field>
+
+    <div
+            class="search-dropdown"
+            *ngIf="options().length > 0"
+    >
+        <div
+                class="search-item"
+                *ngFor="let item of options()"
+                (click)="handleSelect($event, item)"
+        >
+            {{ item.name }}
+        </div>
+    </div>
+</div>

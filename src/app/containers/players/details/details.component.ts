@@ -4,6 +4,7 @@ import { getDetails } from '../../../endpoints/players';
 import { MatCardModule } from '@angular/material/card';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 
 @Component({
     selector: 'app-player-details',
@@ -11,26 +12,34 @@ import { ChartConfiguration, ChartData } from 'chart.js';
     imports: [CommonModule, MatCardModule, BaseChartDirective]
 })
 export class PlayerDetailsComponent {
+    constructor(private route: ActivatedRoute) { }
 
     loaded = signal<boolean>(false);
     details = signal<any>({});
+
+    async ngOnInit() {
+        this.route.queryParamMap.subscribe(async params => {
+            const id = params.get('id');
+
+            if (!id) {
+                console.error('Missing id query parameter');
+                return;
+            }
+
+            const playerId = Number(id);
+
+            const playerDetailsResponse = await getDetails(playerId);
+
+            this.details.set(playerDetailsResponse.data.data);
+            this.loaded.set(true);
+        });
+    }
 
     typeOrder: any = {
         'Test': 1,
         'ODI': 2,
         'T20': 3
     };
-
-    async ngOnInit(): Promise<void> {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        const id = parseInt(urlSearchParams.get('id') ?? '0', 10);
-        console.log(id);
-
-        const playerDetailsResponse = await getDetails(id);
-        this.details.set(playerDetailsResponse.data.data);
-
-        this.loaded.set(true);
-    }
 
     getBattingGameTypes = () => {
         const types = Object.keys(this.details().battingStats);
