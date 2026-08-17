@@ -1,8 +1,37 @@
 <div [attr.data-theme]="themeService.mode">
-    <app-bar />
-    <app-loader />
 
-    <div style="padding: 2%;">
-        <router-outlet></router-outlet>
-    </div>
+    <mat-sidenav-container class="layout-container">
+
+        <mat-sidenav #drawer mode="side" class="drawer">
+            <div class="drawer-header">
+                <h3>Menu</h3>
+            </div>
+
+            <mat-nav-list>
+                <a mat-list-item routerLink="/" (click)="drawer.close()">
+                    <mat-icon matListItemIcon>home</mat-icon>
+                    <span>Home</span>
+                </a>
+
+                <a mat-list-item routerLink="/players/stats" (click)="drawer.close()">
+                    <mat-icon matListItemIcon>bar_chart</mat-icon>
+                    <span>Players Stats</span>
+                </a>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+
+            <app-bar [drawer]="drawer" />
+
+            <app-loader />
+
+            <div style="padding: 2%;">
+                <router-outlet></router-outlet>
+            </div>
+
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+
 </div>
