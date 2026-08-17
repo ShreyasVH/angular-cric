@@ -10,6 +10,195 @@ html {
                 typography: Roboto,
                 density: 0
         ));
+
+        @include mat.slide-toggle-overrides((
+                label-text-color: white
+        ));
+
+        @include mat.icon-button-overrides((
+                icon-color: white
+        ));
+
+        .man-of-the-match {
+                @include mat.chips-overrides((
+                        outline-color: #E0AA3E !important,
+                        label-text-color: white !important,
+                        elevated-container-color: #E0AA3E !important,
+                ));
+        }
+}
+
+html.dark-theme {
+        @include mat.theme((
+                color: (
+                        primary: mat.$azure-palette,
+                        tertiary: mat.$orange-palette,
+                        theme-type: dark,
+                )
+        ));
+
+        color-scheme: dark;
+
+        .primary {
+                @include mat.button-overrides((
+                        filled-container-color: #90caf9,
+                        outlined-outline-color: #90caf9,
+                        outlined-label-text-color: #90caf9,
+                        outlined-state-layer-color: #90caf9,
+                        text-label-text-color: #90caf9,
+                        text-state-layer-color: #90caf9
+                ));
+
+                @include mat.toolbar-overrides((
+                        container-background-color: #90caf9,
+                        container-text-color: black
+                ));
+
+                @include mat.checkbox-overrides((
+                        selected-icon-color: #90caf9,
+                        selected-hover-icon-color: #90caf9,
+                        selected-hover-state-layer-color: #90caf9,
+                        selected-pressed-icon-color: #90caf9,
+                        selected-pressed-state-layer-color: #90caf9,
+                        selected-focus-icon-color: #90caf9,
+                        selected-focus-state-layer-color: #90caf9,
+                ));
+
+                @include mat.progress-spinner-overrides((
+                        active-indicator-color: #90caf9,
+                ));
+
+                @include mat.chips-overrides((
+                        outline-color: #90caf9,
+                        label-text-color: #90caf9,
+                        hover-state-layer-color: #90caf9,
+                ));
+        }
+
+        @include mat.slide-toggle-overrides((
+                label-text-color: black
+        ));
+
+        @include mat.icon-button-overrides((
+                icon-color: black
+        ));
+
+        @include mat.card-overrides((
+                subtitle-text-color: #9b9b9b,
+                filled-container-color: #373737,
+                elevated-container-color: #373737
+        ));
+
+        .accent {
+                @include mat.slide-toggle-overrides((
+                        selected-handle-color: #ce93d8,
+                        selected-pressed-handle-color: #ce93d8,
+                        selected-hover-handle-color: #ce93d8,
+                        selected-focus-handle-color: #ce93d8,
+
+                        selected-handle-size: 20px,
+
+                        selected-handle-horizontal-margin: 0 20px,
+                        selected-pressed-handle-horizontal-margin: 0 20px,
+                ));
+
+                @include mat.button-overrides((
+                        filled-container-color: #ce93d8,
+                        outlined-outline-color: #ce93d8,
+                        outlined-label-text-color: #ce93d8,
+                        outlined-state-layer-color: #ce93d8,
+                        text-label-text-color: #ce93d8,
+                        text-state-layer-color: #ce93d8
+                ));
+
+                @include mat.checkbox-overrides((
+                        selected-icon-color: #ce93d8,
+                        selected-hover-icon-color: #ce93d8,
+                        selected-hover-state-layer-color: #ce93d8,
+                        selected-pressed-icon-color: #ce93d8,
+                        selected-pressed-state-layer-color: #ce93d8,
+                        selected-focus-icon-color: #ce93d8,
+                        selected-focus-state-layer-color: #ce93d8,
+                ));
+
+                @include mat.chips-overrides((
+                        outline-color: #ce93d8,
+                        label-text-color: #ce93d8,
+                        hover-state-layer-color: #ce93d8,
+                ));
+        }
+
+        .warn {
+                @include mat.button-overrides((
+                        filled-container-color: #f44336,
+                        outlined-outline-color: #f44336,
+                        outlined-label-text-color: #f44336,
+                        outlined-state-layer-color: #f44336,
+                        text-label-text-color: #f44336,
+                        text-state-layer-color: #f44336,
+                ));
+
+                @include mat.icon-button-overrides((
+                        icon-color: #f44336
+                ));
+
+                @include mat.checkbox-overrides((
+                        selected-icon-color: #f44336,
+                        selected-hover-icon-color: #f44336,
+                        selected-hover-state-layer-color: #f44336,
+                        selected-pressed-icon-color: #f44336,
+                        selected-pressed-state-layer-color: #f44336,
+                        selected-focus-icon-color: #f44336,
+                        selected-focus-state-layer-color: #f44336,
+                ));
+
+                @include mat.chips-overrides((
+                        outline-color: #f44336,
+                        label-text-color: #f44336,
+                        hover-state-layer-color: #f44336,
+                ));
+        }
+
+        .man-of-the-match {
+                @include mat.chips-overrides((
+                        outline-color: #E0AA3E !important,
+                        label-text-color: #E0AA3E !important,
+                        elevated-container-color: transparent !important,
+                ));
+        }
+}
+
+:root {
+        @include mat.card-overrides((
+                subtitle-text-color: #9b9b9b,
+                filled-container-color: white,
+                elevated-container-color: white
+        ));
+
+        @include mat.toolbar-overrides((
+                container-text-color: white
+        ));
+
+        @include mat.slide-toggle-overrides((
+                unselected-handle-color: white,
+                unselected-pressed-handle-color: white,
+                unselected-hover-handle-color: white,
+                unselected-focus-handle-color: white,
+
+                unselected-track-color: #456a8a,
+                unselected-pressed-track-color: #456a8a,
+                unselected-hover-track-color: #456a8a,
+                unselected-focus-track-color: #456a8a,
+
+                unselected-handle-size: 20px,
+                pressed-handle-size: 20px,
+
+                track-height: 15px,
+                track-width: 40px,
+
+                unselected-handle-horizontal-margin: 0px,
+                unselected-pressed-handle-horizontal-margin: 0px
+        ));
 }
 
 .primary {
@@ -44,10 +233,6 @@ html {
                 outline-color: rgb(66, 165, 245),
                 label-text-color: rgb(66, 165, 245),
                 hover-state-layer-color: rgb(66, 165, 245),
-        ));
-
-        @include mat.fab-overrides((
-                container-color: rgb(66, 165, 245)
         ));
 }
 
@@ -120,10 +305,45 @@ html {
                 filled-container-shape: 4px,
                 outlined-container-shape: 4px
         ));
+}
 
-        @include mat.card-overrides((
-                subtitle-text-color: #9b9b9b,
-                filled-container-color: white,
-                elevated-container-color: white
+.success-snackbar {
+        @include mat.snack-bar-overrides((
+                container-color: rgb(54, 122, 56),
+                supporting-text-color: white,
+                button-color: white
+        ));
+}
+
+.error-snackbar {
+        @include mat.snack-bar-overrides((
+                container-color: rgb(167, 58, 56),
+                supporting-text-color: white,
+                button-color: white
+        ));
+}
+
+.info-snackbar {
+        @include mat.snack-bar-overrides((
+                container-color: rgb(2, 118, 170),
+                supporting-text-color: white,
+                button-color: white
+        ));
+}
+
+.warning-snackbar {
+        @include mat.snack-bar-overrides((
+                container-color: rgb(255, 152, 0),
+                supporting-text-color: white,
+                button-color: white
+        ));
+}
+
+
+.success {
+        @include mat.chips-overrides((
+                outline-color: #4caf50,
+                label-text-color: #4caf50,
+                hover-state-layer-color: #4caf50,
         ));
 }
