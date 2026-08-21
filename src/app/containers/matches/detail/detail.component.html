@@ -315,6 +315,44 @@
                                                 <tr mat-row *matRowDef="let row; columns: figureColumns;"></tr>
                                             </table>
                                         </div>
+
+                                        <table mat-table [dataSource]="getPartnershipsForInnings(innings)" style="margin-top: 2%; max-width: 80%">
+                                            <ng-container matColumnDef="Player1">
+                                                <th mat-header-cell style="text-align: center" *matHeaderCellDef>Player 1</th>
+                                                <td mat-cell style="text-align: center" *matCellDef="let partnership">
+                                                    <span class="link" (click)="handlePlayerClick(partnership.player1.player.id)">
+                                                        {{partnership.player1.player.name}}
+                                                    </span>
+                                                    <span>
+                                                        {{partnership.player1.runs}}({{partnership.player1.balls}})
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Partnership">
+                                                <th mat-header-cell style="text-align: center" *matHeaderCellDef>Partnership</th>
+                                                <td mat-cell style="text-align: center" *matCellDef="let partnership">
+                                                    <span>
+                                                        {{partnership.runs}}{{partnership.ended ? '' : '*'}}({{partnership.balls}})
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Player2">
+                                                <th mat-header-cell style="text-align: center" *matHeaderCellDef>Player 2</th>
+                                                <td mat-cell style="text-align: center" *matCellDef="let partnership">
+                                                    <span class="link" (click)="handlePlayerClick(partnership.player2.player.id)">
+                                                        {{partnership.player2.player.name}}
+                                                    </span>
+                                                    <span>
+                                                        {{partnership.player2.runs}}({{partnership.player2.balls}})
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="partnershipColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: partnershipColumns;"></tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

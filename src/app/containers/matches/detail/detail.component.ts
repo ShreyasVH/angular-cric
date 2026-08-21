@@ -18,6 +18,7 @@ export class MatchDetailComponent {
     loaded = signal<boolean>(false);
     scoreColumns: any = ['Batsman', 'Dismissal', 'Runs', 'Balls', 'Fours', 'Sixes']
     figureColumns: any = ['Bowler', 'Overs', 'Maidens', 'Runs', 'Wickets']
+    partnershipColumns: any = ['Player1', 'Partnership', 'Player2']
 
     async ngOnInit(): Promise<void> {
         const urlSearchParams = new URLSearchParams(window.location.search);
@@ -177,6 +178,10 @@ export class MatchDetailComponent {
 
     getFiguresForInnings(innings: number) {
         return this.match.bowlingFigures.filter((b: any) => b.innings === innings);
+    }
+
+    getPartnershipsForInnings(innings: number) {
+        return this.match.partnerships.filter((b: any) => b.innings === innings);
     }
 
     getExtrasText(innings: number) {
