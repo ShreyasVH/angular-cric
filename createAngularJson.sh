@@ -27,7 +27,10 @@ cat <<EOL > angular.json
             "assets": [
               {
                   "glob": "**/*",
-                  "input": "public"
+                  "input": "public",
+                  "ignore": [
+                    "index.html"
+                  ]
               }
             ],
             "styles": [
